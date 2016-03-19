@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="GitLite" InternalType="GUI">
   <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00010001N0005Debug000000000000]]>
+    </Plugin>
     <Plugin Name="CMakePlugin">
       <![CDATA[[{
   "name": "Debug",
@@ -12,9 +15,6 @@
   "arguments": [],
   "parentProject": ""
  }]]]>
-    </Plugin>
-    <Plugin Name="qmake">
-      <![CDATA[00010001N0005Debug000000000000]]>
     </Plugin>
   </Plugins>
   <Description/>
@@ -33,6 +33,9 @@
     <File Name="wxcrafter.wxcp"/>
     <File Name="win_resources.rc"/>
   </VirtualDirectory>
+  <Dependencies Name="Debug">
+    <Project Name="wxLibGit"/>
+  </Dependencies>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="" C_Options="" Assembler="">
@@ -46,12 +49,16 @@
     <Configuration Name="Debug" CompilerType="g++-64" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g;-O0;-Wall;$(shell wx-config --cflags)" C_Options="-g;-O0;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
         <IncludePath Value="."/>
+        <IncludePath Value="$(WorkspacePath)/wxLibGit"/>
       </Compiler>
-      <Linker Options="$(shell wx-config --libs)  ;-mwindows" Required="yes"/>
+      <Linker Options="$(shell wx-config --libs)  ;-mwindows" Required="yes">
+        <LibraryPath Value="$(WorkspacePath)/bin/"/>
+        <Library Value="libwxLibGit.dll"/>
+      </Linker>
       <ResourceCompiler Options="$(shell wx-config --rcflags)" Required="no"/>
-      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="no" IsGUIProgram="no" IsEnabled="yes"/>
+      <General OutputFile="$(WorkspacePath)/bin/$(ProjectName)" IntermediateDirectory="./Debug" Command="$(WorkspacePath)/bin/$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(WorkspacePath)/bin" PauseExecWhenProcTerminates="no" IsGUIProgram="no" IsEnabled="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
-        <![CDATA[]]>
+        <![CDATA[PATH=$(WorkspacePath)/sdk/libgit2/lib;$PATH]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
         <DebuggerSearchPaths/>

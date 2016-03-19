@@ -7,15 +7,16 @@
 class MainApp : public wxApp
 {
 public:
-    MainApp() {}
-    virtual ~MainApp() {}
+    MainApp() { GitLiteRepo::Initialize(); }
+    virtual ~MainApp() { GitLiteRepo::Shutdown(); }
 
-    virtual bool OnInit() {
+    virtual bool OnInit()
+    {
         // Add the common image handlers
-        wxImage::AddHandler( new wxPNGHandler );
-        wxImage::AddHandler( new wxJPEGHandler );
+        wxImage::AddHandler(new wxPNGHandler);
+        wxImage::AddHandler(new wxJPEGHandler);
 
-        MainFrame *mainFrame = new MainFrame(NULL);
+        MainFrame* mainFrame = new MainFrame(NULL);
         SetTopWindow(mainFrame);
         return GetTopWindow()->Show();
     }

@@ -46,7 +46,10 @@ MainFrameBaseClass::MainFrameBaseClass(wxWindow* parent, wxWindowID id, const wx
     m_name8->Append(m_menuItem9);
     
     m_mainToolbar = this->CreateToolBar(wxTB_FLAT, wxID_ANY);
-    m_mainToolbar->SetToolBitmapSize(wxSize(16,16));
+    m_mainToolbar->SetToolBitmapSize(wxSize(24,24));
+    
+    m_mainToolbar->AddTool(TB_ID_COPY, _("Clone repository"), wxXmlResource::Get()->LoadBitmap(wxT("24-copy")), wxNullBitmap, wxITEM_NORMAL, _("Clone repository"), _("Clone repository"), NULL);
+    m_mainToolbar->Realize();
     
     SetName(wxT("MainFrameBaseClass"));
     SetSize(500,300);
@@ -68,6 +71,7 @@ MainFrameBaseClass::MainFrameBaseClass(wxWindow* parent, wxWindowID id, const wx
     // Connect events
     this->Connect(m_menuItem7->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(MainFrameBaseClass::OnExit), NULL, this);
     this->Connect(m_menuItem9->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(MainFrameBaseClass::OnAbout), NULL, this);
+    this->Connect(TB_ID_COPY, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler(MainFrameBaseClass::OnClone), NULL, this);
     
 }
 
@@ -75,5 +79,6 @@ MainFrameBaseClass::~MainFrameBaseClass()
 {
     this->Disconnect(m_menuItem7->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(MainFrameBaseClass::OnExit), NULL, this);
     this->Disconnect(m_menuItem9->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(MainFrameBaseClass::OnAbout), NULL, this);
+    this->Disconnect(TB_ID_COPY, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler(MainFrameBaseClass::OnClone), NULL, this);
     
 }

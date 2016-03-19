@@ -26,6 +26,10 @@
 
 class MainFrameBaseClass : public wxFrame
 {
+public:
+    enum {
+        TB_ID_COPY = 10001,
+    };
 protected:
     wxPanel* m_mainPanel;
     wxMenuBar* m_menuBar;
@@ -38,6 +42,7 @@ protected:
 protected:
     virtual void OnExit(wxCommandEvent& event) { event.Skip(); }
     virtual void OnAbout(wxCommandEvent& event) { event.Skip(); }
+    virtual void OnClone(wxCommandEvent& event) { event.Skip(); }
 
 public:
     wxPanel* GetMainPanel() { return m_mainPanel; }
