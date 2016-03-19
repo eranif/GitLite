@@ -1,4 +1,4 @@
-#include "wxLibGit.h"
+#include "GitLiteRepo.h"
 #include <wx/dir.h>
 #include <wx/filename.h>
 
