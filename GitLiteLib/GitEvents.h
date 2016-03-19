@@ -11,34 +11,39 @@
  */
 class WXDLLIMPEXP_LIBGIT GitLiteEvent : public wxCommandEvent
 {
+    wxString m_message;
+
 public:
     GitLiteEvent(wxEventType commandType = wxEVT_NULL, int winid = 0);
     GitLiteEvent(const GitLiteEvent& src);
     GitLiteEvent& operator=(const GitLiteEvent& src);
     virtual ~GitLiteEvent();
     virtual wxEvent* Clone() const { return new GitLiteEvent(*this); }
+    void SetMessage(const wxString& message) { this->m_message = message; }
+    const wxString& GetMessage() const { return m_message; }
 };
 
 typedef void (wxEvtHandler::*GitLiteEventFunction)(GitLiteEvent&);
 #define GitLiteEventHandler(func) wxEVENT_HANDLER_CAST(GitLiteEventFunction, func)
 
 /**
- * @class GitLiteProgressEvent
+ * @class GitLiteCloneEvent
  * @brief GitLite progress event
  */
-class WXDLLIMPEXP_LIBGIT GitLiteProgressEvent : public GitLiteEvent
+class WXDLLIMPEXP_LIBGIT GitLiteCloneEvent : public GitLiteEvent
 {
 protected:
     int m_total;
     int m_current;
     bool m_cancelled;
+    bool m_error;
 
 public:
-    GitLiteProgressEvent(wxEventType commandType = wxEVT_NULL, int winid = 0);
-    GitLiteProgressEvent(const GitLiteProgressEvent& src);
-    GitLiteProgressEvent& operator=(const GitLiteProgressEvent& src);
-    virtual ~GitLiteProgressEvent();
-    virtual wxEvent* Clone() const { return new GitLiteProgressEvent(*this); }
+    GitLiteCloneEvent(wxEventType commandType = wxEVT_NULL, int winid = 0);
+    GitLiteCloneEvent(const GitLiteCloneEvent& src);
+    GitLiteCloneEvent& operator=(const GitLiteCloneEvent& src);
+    virtual ~GitLiteCloneEvent();
+    virtual wxEvent* Clone() const { return new GitLiteCloneEvent(*this); }
     void SetCancelled(bool cancelled) { this->m_cancelled = cancelled; }
     void SetCurrent(int current) { this->m_current = current; }
     void SetTotal(int total) { this->m_total = total; }
@@ -46,16 +51,19 @@ public:
     int GetCurrent() const { return m_current; }
     int GetTotal() const { return m_total; }
     bool IsDone() const { return m_total == m_current; }
+    void SetError(bool error) { this->m_error = error; }
+    bool IsError() const { return m_error; }
 };
 
-typedef void (wxEvtHandler::*GitLiteProgressEventFunction)(GitLiteProgressEvent&);
+typedef void (wxEvtHandler::*GitLiteProgressEventFunction)(GitLiteCloneEvent&);
 #define GitLiteProgressEventHandler(func) wxEVENT_HANDLER_CAST(GitLiteProgressEventFunction, func)
 
 //========================================
 // Define the GIT events
 //========================================
 
-wxDECLARE_EXPORTED_EVENT(WXDLLIMPEXP_LIBGIT, wxEVT_GIT_PROGRESS, GitLiteProgressEvent);
-wxDECLARE_EXPORTED_EVENT(WXDLLIMPEXP_LIBGIT, wxEVT_GIT_PROGRESS_COMPLETED, GitLiteProgressEvent);
+wxDECLARE_EXPORTED_EVENT(WXDLLIMPEXP_LIBGIT, wxEVT_GIT_CLONE_PROGRESS, GitLiteCloneEvent);
+wxDECLARE_EXPORTED_EVENT(WXDLLIMPEXP_LIBGIT, wxEVT_GIT_CLONE_ERROR, GitLiteCloneEvent);
+wxDECLARE_EXPORTED_EVENT(WXDLLIMPEXP_LIBGIT, wxEVT_GIT_CLONE_COMPLETED, GitLiteCloneEvent);
 
 #endif // GIT_EVENTS_H

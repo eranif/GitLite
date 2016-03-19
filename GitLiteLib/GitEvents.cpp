@@ -16,6 +16,7 @@ GitLiteEvent& GitLiteEvent::operator=(const GitLiteEvent& src)
     m_cmdString = src.m_cmdString;
     m_commandInt = src.m_commandInt;
     m_extraLong = src.m_extraLong;
+    m_message = src.m_message;
     return *this;
 }
 
@@ -26,18 +27,20 @@ GitLiteEvent::~GitLiteEvent() {}
 //====================================
 // Progress event
 //====================================
-wxDEFINE_EVENT(wxEVT_GIT_PROGRESS, GitLiteProgressEvent);
-wxDEFINE_EVENT(wxEVT_GIT_PROGRESS_COMPLETED, GitLiteProgressEvent);
+wxDEFINE_EVENT(wxEVT_GIT_CLONE_PROGRESS, GitLiteCloneEvent);
+wxDEFINE_EVENT(wxEVT_GIT_CLONE_COMPLETED, GitLiteCloneEvent);
+wxDEFINE_EVENT(wxEVT_GIT_CLONE_ERROR, GitLiteCloneEvent);
 
-GitLiteProgressEvent::GitLiteProgressEvent(wxEventType commandType, int winid)
+GitLiteCloneEvent::GitLiteCloneEvent(wxEventType commandType, int winid)
     : GitLiteEvent(commandType, winid)
     , m_total(100)
     , m_current(0)
     , m_cancelled(false)
+    , m_error(false)
 {
 }
 
-GitLiteProgressEvent& GitLiteProgressEvent::operator=(const GitLiteProgressEvent& src)
+GitLiteCloneEvent& GitLiteCloneEvent::operator=(const GitLiteCloneEvent& src)
 {
     GitLiteEvent::operator=(src);
     m_total = src.m_total;
@@ -46,6 +49,6 @@ GitLiteProgressEvent& GitLiteProgressEvent::operator=(const GitLiteProgressEvent
     return *this;
 }
 
-GitLiteProgressEvent::GitLiteProgressEvent(const GitLiteProgressEvent& src) { *this = src; }
+GitLiteCloneEvent::GitLiteCloneEvent(const GitLiteCloneEvent& src) { *this = src; }
 
-GitLiteProgressEvent::~GitLiteProgressEvent() {}
+GitLiteCloneEvent::~GitLiteCloneEvent() {}

@@ -2,6 +2,7 @@
 #define MAINFRAME_H
 #include "wxcrafter.h"
 #include "GitLiteRepo.h"
+#include "GitEvents.h"
 
 class MainFrame : public MainFrameBaseClass
 {
@@ -16,5 +17,10 @@ public:
 
 protected:
     virtual void OnClone(wxCommandEvent& event);
+    
+    // Git clone event handlers
+    void OnCloneError(GitLiteCloneEvent& event);
+    void OnCloneCompleted(GitLiteCloneEvent& event);
+    void OnCloneProgress(GitLiteCloneEvent& event);
 };
 #endif // MAINFRAME_H

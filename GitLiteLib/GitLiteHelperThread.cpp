@@ -12,15 +12,16 @@ void* GitLiteHelperThread::Entry()
     while(true) {
         // Did we get a request to terminate?
         if(TestDestroy()) break;
-        GitLiteHelperThreadRequest* request = NULL;
+        GitLiteThreadRequest* request = NULL;
         if(m_queue.ReceiveTimeout(50, request) == wxMSGQUEUE_NO_ERROR) {
+            request->Process();
             wxDELETE(request);
         }
     }
     return NULL;
 }
 
-void GitLiteHelperThread::Add(GitLiteHelperThreadRequest* request) { m_queue.Post(request); }
+void GitLiteHelperThread::Add(GitLiteThreadRequest* request) { m_queue.Post(request); }
 
 void GitLiteHelperThread::Stop()
 {
