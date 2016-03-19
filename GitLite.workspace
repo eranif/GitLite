@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Workspace Name="GitLite" Database="">
   <Project Name="GitLite" Path="GitLite/GitLite.project" Active="Yes"/>
-  <Project Name="GitLiteLib" Path="wxLibGit/wxLibGit.project" Active="No"/>
+  <Project Name="GitLiteLib" Path="GitLiteLib/GitLiteLib.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Environment/>
       <Project Name="GitLite" ConfigName="Debug"/>
       <Project Name="GitLiteLib" ConfigName="Debug"/>
+      <Project Name="GitLiteLib" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Environment/>
       <Project Name="GitLite" ConfigName="Release"/>
+      <Project Name="GitLiteLib" ConfigName="Release"/>
       <Project Name="GitLiteLib" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>

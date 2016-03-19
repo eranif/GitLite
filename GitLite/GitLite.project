@@ -49,7 +49,7 @@
     <Configuration Name="Debug" CompilerType="g++-64" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g;-O0;-Wall;$(shell wx-config --cflags)" C_Options="-g;-O0;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
         <IncludePath Value="."/>
-        <IncludePath Value="$(WorkspacePath)/wxLibGit"/>
+        <IncludePath Value="$(WorkspacePath)/GitLiteLib"/>
       </Compiler>
       <Linker Options="$(shell wx-config --libs)  ;-mwindows" Required="yes">
         <LibraryPath Value="$(WorkspacePath)/bin/"/>
