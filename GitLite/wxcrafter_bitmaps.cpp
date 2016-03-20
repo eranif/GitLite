@@ -124,6 +124,6 @@ void wxC9ED9InitBitmapResources()
 
     XRC_ADD_FILE(wxT("XRC_resource/wxcrafter_bitmaps.cpp$bitmaps_png_24-copy.png"), xml_res_file_0, xml_res_size_0, wxT("image/png"));
     XRC_ADD_FILE(wxT("XRC_resource/wxcrafter_bitmaps.cpp$bitmaps_png_24-copy@2x.png"), xml_res_file_1, xml_res_size_1, wxT("image/png"));
-    XRC_ADD_FILE(wxT("XRC_resource/wxcrafter_bitmaps.cpp$D__src_GitLite_GitLite_wxcrafter_bitmaps.xrc"), xml_res_file_2, xml_res_size_2, wxT("text/xml"));
-    wxXmlResource::Get()->Load(wxT("memory:XRC_resource/wxcrafter_bitmaps.cpp$D__src_GitLite_GitLite_wxcrafter_bitmaps.xrc"));
+    XRC_ADD_FILE(wxT("XRC_resource/wxcrafter_bitmaps.cpp$_home_eran_devl_GitLite_GitLite_wxcrafter_bitmaps.xrc"), xml_res_file_2, xml_res_size_2, wxT("text/xml"));
+    wxXmlResource::Get()->Load(wxT("memory:XRC_resource/wxcrafter_bitmaps.cpp$_home_eran_devl_GitLite_GitLite_wxcrafter_bitmaps.xrc"));
 }

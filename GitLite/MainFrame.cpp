@@ -2,6 +2,7 @@
 #include <wx/aboutdlg.h>
 #include <wx/textdlg.h>
 #include <wx/msgdlg.h>
+#include "UserNamePasswordDlg.h"
 
 MainFrame::MainFrame(wxWindow* parent)
     : MainFrameBaseClass(parent)
@@ -11,6 +12,7 @@ MainFrame::MainFrame(wxWindow* parent)
     m_repo.Bind(wxEVT_GIT_CLONE_COMPLETED, &MainFrame::OnCloneCompleted, this);
     m_repo.Bind(wxEVT_GIT_CLONE_ERROR, &MainFrame::OnCloneError, this);
     m_repo.Bind(wxEVT_GIT_CLONE_STARTED, &MainFrame::OnCloneStart, this);
+    m_repo.Bind(wxEVT_GIT_CRED_REQUIRED, &MainFrame::OnGitCredentials, this);
 }
 
 MainFrame::~MainFrame()
@@ -19,6 +21,7 @@ MainFrame::~MainFrame()
     m_repo.Unbind(wxEVT_GIT_CLONE_COMPLETED, &MainFrame::OnCloneCompleted, this);
     m_repo.Unbind(wxEVT_GIT_CLONE_ERROR, &MainFrame::OnCloneError, this);
     m_repo.Unbind(wxEVT_GIT_CLONE_STARTED, &MainFrame::OnCloneStart, this);
+    m_repo.Unbind(wxEVT_GIT_CRED_REQUIRED, &MainFrame::OnGitCredentials, this);
 }
 
 void MainFrame::OnExit(wxCommandEvent& event)
@@ -87,7 +90,19 @@ void MainFrame::OnCloneStart(GitLiteCloneEvent& event)
 {
     wxString message;
     message << _("Cloning repository: ") << event.GetUrl();
-    m_cloneProgress =
-        new wxProgressDialog(_("Git Clone"), message, 100, this, wxPD_APP_MODAL | wxPD_CAN_ABORT | wxPD_ELAPSED_TIME);
+    m_cloneProgress = new wxProgressDialog(_("Git Clone"), message, 100, this, wxPD_CAN_ABORT | wxPD_ELAPSED_TIME);
     m_cloneProgress->Show();
+}
+
+void MainFrame::OnGitCredentials(GitLiteCredEvent& event)
+{
+    event.Skip();
+    UserNamePasswordDlg dlg(this);
+    dlg.GetTextCtrlUsername()->ChangeValue(event.GetUser());
+    if(dlg.ShowModal() == wxID_OK) {
+        event.SetUser(dlg.GetTextCtrlUsername()->GetValue());
+        event.SetPass(dlg.GetTextCtrlPassword()->GetValue());
+    } else {
+        event.SetCancelled(true);
+    }
 }

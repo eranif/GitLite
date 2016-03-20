@@ -61,8 +61,35 @@ public:
     const wxString& GetUrl() const { return m_url; }
 };
 
-typedef void (wxEvtHandler::*GitLiteProgressEventFunction)(GitLiteCloneEvent&);
-#define GitLiteProgressEventHandler(func) wxEVENT_HANDLER_CAST(GitLiteProgressEventFunction, func)
+typedef void (wxEvtHandler::*GitLiteCloneEventFunction)(GitLiteCloneEvent&);
+#define GitLiteCloneEventHandler(func) wxEVENT_HANDLER_CAST(GitLiteCloneEventFunction, func)
+
+/**
+ * @class GitLiteCredEvent
+ * @brief request for credentials
+ */
+class WXDLLIMPEXP_LIBGIT GitLiteCredEvent : public GitLiteEvent
+{
+protected:
+    wxString m_user;
+    wxString m_pass;
+    bool m_cancelled;
+
+public:
+    GitLiteCredEvent(wxEventType commandType = wxEVT_NULL, int winid = 0);
+    GitLiteCredEvent(const GitLiteCredEvent& src);
+    GitLiteCredEvent& operator=(const GitLiteCredEvent& src);
+    virtual ~GitLiteCredEvent();
+    virtual wxEvent* Clone() const { return new GitLiteCredEvent(*this); }
+    void SetCancelled(bool cancelled) { this->m_cancelled = cancelled; }
+    void SetPass(const wxString& pass) { this->m_pass = pass; }
+    void SetUser(const wxString& user) { this->m_user = user; }
+    bool IsCancelled() const { return m_cancelled; }
+    const wxString& GetPass() const { return m_pass; }
+    const wxString& GetUser() const { return m_user; }
+};
+typedef void (wxEvtHandler::*GitLiteCredEventFunction)(GitLiteCredEvent&);
+#define GitLiteCredEventHandler(func) wxEVENT_HANDLER_CAST(GitLiteCredEventFunction, func)
 
 //========================================
 // Define the GIT events
@@ -72,5 +99,6 @@ wxDECLARE_EXPORTED_EVENT(WXDLLIMPEXP_LIBGIT, wxEVT_GIT_CLONE_STARTED, GitLiteClo
 wxDECLARE_EXPORTED_EVENT(WXDLLIMPEXP_LIBGIT, wxEVT_GIT_CLONE_PROGRESS, GitLiteCloneEvent);
 wxDECLARE_EXPORTED_EVENT(WXDLLIMPEXP_LIBGIT, wxEVT_GIT_CLONE_ERROR, GitLiteCloneEvent);
 wxDECLARE_EXPORTED_EVENT(WXDLLIMPEXP_LIBGIT, wxEVT_GIT_CLONE_COMPLETED, GitLiteCloneEvent);
+wxDECLARE_EXPORTED_EVENT(WXDLLIMPEXP_LIBGIT, wxEVT_GIT_CRED_REQUIRED, GitLiteCredEvent);
 
 #endif // GIT_EVENTS_H

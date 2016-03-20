@@ -25,5 +25,6 @@ protected:
     void OnCloneStart(GitLiteCloneEvent& event);
     void OnCloneCompleted(GitLiteCloneEvent& event);
     void OnCloneProgress(GitLiteCloneEvent& event);
+    void OnGitCredentials(GitLiteCredEvent& event);
 };
 #endif // MAINFRAME_H

@@ -17,6 +17,10 @@
 #include <wx/panel.h>
 #include <wx/menu.h>
 #include <wx/toolbar.h>
+#include <wx/dialog.h>
+#include <wx/stattext.h>
+#include <wx/textctrl.h>
+#include <wx/button.h>
 #if wxVERSION_NUMBER >= 2900
 #include <wx/persist.h>
 #include <wx/persist/toplevel.h>
@@ -48,8 +52,31 @@ public:
     wxPanel* GetMainPanel() { return m_mainPanel; }
     wxMenuBar* GetMenuBar() { return m_menuBar; }
     wxToolBar* GetMainToolbar() { return m_mainToolbar; }
-    MainFrameBaseClass(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("My Frame"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(500,300), long style = wxCAPTION|wxRESIZE_BORDER|wxMAXIMIZE_BOX|wxMINIMIZE_BOX|wxSYSTEM_MENU|wxCLOSE_BOX);
+    MainFrameBaseClass(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("My Frame"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(-1,-1), long style = wxCAPTION|wxRESIZE_BORDER|wxMAXIMIZE_BOX|wxMINIMIZE_BOX|wxSYSTEM_MENU|wxCLOSE_BOX);
     virtual ~MainFrameBaseClass();
+};
+
+
+class UserNamePasswordDlgBase : public wxDialog
+{
+protected:
+    wxStaticText* m_staticText25;
+    wxTextCtrl* m_textCtrlUsername;
+    wxStaticText* m_staticText29;
+    wxTextCtrl* m_textCtrlPassword;
+    wxStdDialogButtonSizer* m_stdBtnSizer17;
+    wxButton* m_button19;
+    wxButton* m_button21;
+
+protected:
+
+public:
+    wxStaticText* GetStaticText25() { return m_staticText25; }
+    wxTextCtrl* GetTextCtrlUsername() { return m_textCtrlUsername; }
+    wxStaticText* GetStaticText29() { return m_staticText29; }
+    wxTextCtrl* GetTextCtrlPassword() { return m_textCtrlPassword; }
+    UserNamePasswordDlgBase(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Username/Password"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(-1,-1), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+    virtual ~UserNamePasswordDlgBase();
 };
 
 #endif

@@ -1,7 +1,7 @@
 #ifndef GITLITEHELPERTHREAD_H
 #define GITLITEHELPERTHREAD_H
 
-#include "wx/thread.h" // Base class: wxThread
+#include <wx/thread.h> // Base class: wxThread
 #include "GitLiteExports.h"
 #include <wx/msgqueue.h>
 #include <wx/event.h>

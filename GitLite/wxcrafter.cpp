@@ -52,7 +52,8 @@ MainFrameBaseClass::MainFrameBaseClass(wxWindow* parent, wxWindowID id, const wx
     m_mainToolbar->Realize();
     
     SetName(wxT("MainFrameBaseClass"));
-    SetSize(500,300);
+    SetMinClientSize(wxSize(500,300));
+    SetSize(-1,-1);
     if (GetSizer()) {
          GetSizer()->Fit(this);
     }
@@ -81,4 +82,81 @@ MainFrameBaseClass::~MainFrameBaseClass()
     this->Disconnect(m_menuItem9->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(MainFrameBaseClass::OnAbout), NULL, this);
     this->Disconnect(TB_ID_COPY, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler(MainFrameBaseClass::OnClone), NULL, this);
     
+}
+
+UserNamePasswordDlgBase::UserNamePasswordDlgBase(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+    : wxDialog(parent, id, title, pos, size, style)
+{
+    if ( !bBitmapLoaded ) {
+        // We need to initialise the default bitmap handler
+        wxXmlResource::Get()->AddHandler(new wxBitmapXmlHandler);
+        wxC9ED9InitBitmapResources();
+        bBitmapLoaded = true;
+    }
+    
+    wxBoxSizer* boxSizer15 = new wxBoxSizer(wxVERTICAL);
+    this->SetSizer(boxSizer15);
+    
+    wxFlexGridSizer* flexGridSizer23 = new wxFlexGridSizer(0, 2, 0, 0);
+    flexGridSizer23->SetFlexibleDirection( wxBOTH );
+    flexGridSizer23->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+    flexGridSizer23->AddGrowableCol(1);
+    
+    boxSizer15->Add(flexGridSizer23, 1, wxALL|wxEXPAND, 5);
+    
+    m_staticText25 = new wxStaticText(this, wxID_ANY, _("Username:"), wxDefaultPosition, wxSize(-1,-1), 0);
+    
+    flexGridSizer23->Add(m_staticText25, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
+    
+    m_textCtrlUsername = new wxTextCtrl(this, wxID_ANY, wxT(""), wxDefaultPosition, wxSize(-1,-1), 0);
+    #if wxVERSION_NUMBER >= 3000
+    m_textCtrlUsername->SetHint(wxT(""));
+    #endif
+    
+    flexGridSizer23->Add(m_textCtrlUsername, 0, wxALL|wxEXPAND, 5);
+    
+    m_staticText29 = new wxStaticText(this, wxID_ANY, _("Password:"), wxDefaultPosition, wxSize(-1,-1), 0);
+    
+    flexGridSizer23->Add(m_staticText29, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
+    
+    m_textCtrlPassword = new wxTextCtrl(this, wxID_ANY, wxT(""), wxDefaultPosition, wxSize(-1,-1), wxTE_PASSWORD);
+    #if wxVERSION_NUMBER >= 3000
+    m_textCtrlPassword->SetHint(wxT(""));
+    #endif
+    
+    flexGridSizer23->Add(m_textCtrlPassword, 0, wxALL|wxEXPAND, 5);
+    
+    m_stdBtnSizer17 = new wxStdDialogButtonSizer();
+    
+    boxSizer15->Add(m_stdBtnSizer17, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 10);
+    
+    m_button19 = new wxButton(this, wxID_OK, wxT(""), wxDefaultPosition, wxSize(-1, -1), 0);
+    m_button19->SetDefault();
+    m_stdBtnSizer17->AddButton(m_button19);
+    
+    m_button21 = new wxButton(this, wxID_CANCEL, wxT(""), wxDefaultPosition, wxSize(-1, -1), 0);
+    m_stdBtnSizer17->AddButton(m_button21);
+    m_stdBtnSizer17->Realize();
+    
+    SetName(wxT("UserNamePasswordDlgBase"));
+    SetSize(-1,-1);
+    if (GetSizer()) {
+         GetSizer()->Fit(this);
+    }
+    if(GetParent()) {
+        CentreOnParent(wxBOTH);
+    } else {
+        CentreOnScreen(wxBOTH);
+    }
+#if wxVERSION_NUMBER >= 2900
+    if(!wxPersistenceManager::Get().Find(this)) {
+        wxPersistenceManager::Get().RegisterAndRestore(this);
+    } else {
+        wxPersistenceManager::Get().Restore(this);
+    }
+#endif
+}
+
+UserNamePasswordDlgBase::~UserNamePasswordDlgBase()
+{
 }

@@ -22,5 +22,6 @@ void GitLiteRepo::Shutdown() { git_libgit2_shutdown(); }
 void GitLiteRepo::Clone(const wxString& url, const wxString& targetFolder)
 {
     GitClone* cloneRequest = new GitClone(this, url, targetFolder);
-    m_thread.Add(cloneRequest);
+    cloneRequest->Process();
+    wxDELETE(cloneRequest);
 }

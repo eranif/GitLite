@@ -3,17 +3,22 @@
   <Project Name="GitLite" Path="GitLite/GitLite.project" Active="Yes"/>
   <Project Name="GitLiteLib" Path="GitLiteLib/GitLiteLib.project" Active="No"/>
   <BuildMatrix>
-    <WorkspaceConfiguration Name="Debug" Selected="yes">
+    <WorkspaceConfiguration Name="Debug" Selected="no">
       <Environment/>
       <Project Name="GitLite" ConfigName="Debug"/>
       <Project Name="GitLiteLib" ConfigName="Debug"/>
       <Project Name="GitLiteLib" ConfigName="Debug"/>
     </WorkspaceConfiguration>
-    <WorkspaceConfiguration Name="Release" Selected="yes">
+    <WorkspaceConfiguration Name="Release" Selected="no">
       <Environment/>
       <Project Name="GitLite" ConfigName="Release"/>
       <Project Name="GitLiteLib" ConfigName="Release"/>
       <Project Name="GitLiteLib" ConfigName="Release"/>
+    </WorkspaceConfiguration>
+    <WorkspaceConfiguration Name="Linux_Debug" Selected="yes">
+      <Environment/>
+      <Project Name="GitLiteLib" ConfigName="Linux_Debug"/>
+      <Project Name="GitLite" ConfigName="Linux_Debug"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>

@@ -25,7 +25,7 @@ GitLiteEvent::GitLiteEvent(const GitLiteEvent& src) { *this = src; }
 GitLiteEvent::~GitLiteEvent() {}
 
 //====================================
-// Progress event
+// Clone event
 //====================================
 wxDEFINE_EVENT(wxEVT_GIT_CLONE_STARTED, GitLiteCloneEvent);
 wxDEFINE_EVENT(wxEVT_GIT_CLONE_PROGRESS, GitLiteCloneEvent);
@@ -56,3 +56,26 @@ GitLiteCloneEvent& GitLiteCloneEvent::operator=(const GitLiteCloneEvent& src)
 GitLiteCloneEvent::GitLiteCloneEvent(const GitLiteCloneEvent& src) { *this = src; }
 
 GitLiteCloneEvent::~GitLiteCloneEvent() {}
+
+//====================================
+// Request for credentials event
+//====================================
+wxDEFINE_EVENT(wxEVT_GIT_CRED_REQUIRED, GitLiteCredEvent);
+GitLiteCredEvent::GitLiteCredEvent(wxEventType commandType, int winid)
+    : GitLiteEvent(commandType, winid)
+    , m_cancelled(false)
+{
+}
+
+GitLiteCredEvent::GitLiteCredEvent(const GitLiteCredEvent& src) { *this = src; }
+
+GitLiteCredEvent::~GitLiteCredEvent() {}
+
+GitLiteCredEvent& GitLiteCredEvent::operator=(const GitLiteCredEvent& src)
+{
+    GitLiteEvent::operator=(src);
+    m_cancelled = src.m_cancelled;
+    m_user = src.m_user;
+    m_pass = src.m_pass;
+    return *this;
+}

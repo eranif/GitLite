@@ -2,15 +2,18 @@
 #include <wx/filename.h>
 #include "GitEvents.h"
 #include "GitErrors.h"
+#include "GitCredentials.h"
 // Include libgit headers only in the C++ file to avoid their need when building against this object
 #include <git2/clone.h>
-#include <git2/global.h>
+//#include <git2/global.h>
 #include <git2/errors.h>
+#include <git2/transport.h>
 
 GitClone::GitClone(wxEvtHandler* sink, const wxString& url, const wxString& targetFolder)
-    : GitLiteThreadRequest(sink)
+    : GitCommandBase(sink)
     , m_url(url)
     , m_folder(targetFolder)
+    , m_startEventSent(false)
 {
 }
 
@@ -20,23 +23,30 @@ int GitClone::FetchProgress(const git_transfer_progress* stats, void* payload)
 {
     // Notify about the progress
     GitClone* gitCloneObj = reinterpret_cast<GitClone*>(payload);
-    if(gitCloneObj->m_thread->IsCancel()) {
-        gitCloneObj->m_thread->SetCancel(false);
-        return kGitCloneCancelled;
-    } else {
-        GitLiteCloneEvent event(wxEVT_GIT_CLONE_PROGRESS);
-        event.SetTotal(stats->total_objects);
-        event.SetCurrent(stats->indexed_objects);
-        gitCloneObj->GetSink()->AddPendingEvent(event);
+    if(!gitCloneObj->m_startEventSent) {
+        // repory start
+        GitLiteCloneEvent event(wxEVT_GIT_CLONE_STARTED);
+        event.SetUrl(gitCloneObj->m_url);
+        event.SetPath(gitCloneObj->m_folder);
+        gitCloneObj->GetSink()->ProcessEvent(event);
+        gitCloneObj->m_startEventSent = true;
     }
+
+    GitLiteCloneEvent event(wxEVT_GIT_CLONE_PROGRESS);
+    event.SetTotal(stats->total_objects);
+    event.SetCurrent(stats->indexed_objects);
+    gitCloneObj->GetSink()->ProcessEvent(event);
+    if(event.IsCancelled()) {
+        return kGitCloneCancelled;
+    }
+
     return 0;
 }
 
 void GitClone::CheckoutProgress(const char* path, size_t completed_steps, size_t total_steps, void* payload) {}
 
-void GitClone::Process(GitLiteHelperThread* thread)
+void GitClone::Process()
 {
-    m_thread = thread;
     // Check to see if the target folder exists
     if(wxFileName::DirExists(m_folder)) {
         GitLiteCloneEvent event(wxEVT_GIT_CLONE_ERROR);
@@ -46,22 +56,15 @@ void GitClone::Process(GitLiteHelperThread* thread)
     }
 
     git_clone_options clone_opts = GIT_CLONE_OPTIONS_INIT;
-    clone_opts.checkout_opts.checkout_strategy = GIT_CHECKOUT_RECREATE_MISSING | GIT_CHECKOUT_SAFE;
+    clone_opts.checkout_opts.checkout_strategy = GIT_CHECKOUT_SAFE;
     clone_opts.checkout_opts.progress_cb = GitClone::CheckoutProgress;
     clone_opts.checkout_opts.progress_payload = this;
     clone_opts.checkout_opts = GIT_CHECKOUT_OPTIONS_INIT;
-    clone_opts.fetch_opts.callbacks.transfer_progress = GitClone::FetchProgress;
     clone_opts.fetch_opts.callbacks.payload = this;
+    clone_opts.fetch_opts.callbacks.transfer_progress = GitClone::FetchProgress;
+    clone_opts.fetch_opts.callbacks.credentials = GitCredentials::CloneCredentials;
     giterr_clear();
     git_repository* repo = NULL;
-
-    {
-        // repory start
-        GitLiteCloneEvent event(wxEVT_GIT_CLONE_STARTED);
-        event.SetUrl(m_url);
-        event.SetPath(m_folder);
-        GetSink()->AddPendingEvent(event);
-    }
 
     int rc = git_clone(&repo, m_url.mb_str(wxConvUTF8).data(), m_folder.mb_str(wxConvUTF8).data(), &clone_opts);
     if(rc != 0) {
