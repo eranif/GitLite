@@ -27,6 +27,7 @@ GitLiteEvent::~GitLiteEvent() {}
 //====================================
 // Progress event
 //====================================
+wxDEFINE_EVENT(wxEVT_GIT_CLONE_STARTED, GitLiteCloneEvent);
 wxDEFINE_EVENT(wxEVT_GIT_CLONE_PROGRESS, GitLiteCloneEvent);
 wxDEFINE_EVENT(wxEVT_GIT_CLONE_COMPLETED, GitLiteCloneEvent);
 wxDEFINE_EVENT(wxEVT_GIT_CLONE_ERROR, GitLiteCloneEvent);
@@ -46,6 +47,9 @@ GitLiteCloneEvent& GitLiteCloneEvent::operator=(const GitLiteCloneEvent& src)
     m_total = src.m_total;
     m_cancelled = src.m_cancelled;
     m_current = src.m_current;
+    m_error = src.m_error;
+    m_path = src.m_path;
+    m_url = src.m_url;
     return *this;
 }
 

@@ -6,6 +6,7 @@
 #include <wx/msgqueue.h>
 #include <wx/event.h>
 
+class GitLiteHelperThread;
 class WXDLLIMPEXP_LIBGIT GitLiteThreadRequest
 {
     wxEvtHandler* m_sink;
@@ -17,12 +18,13 @@ public:
     {
     }
     virtual ~GitLiteThreadRequest() {}
-    virtual void Process() = 0;
+    virtual void Process(GitLiteHelperThread* thread) = 0;
 };
 
 class WXDLLIMPEXP_LIBGIT GitLiteHelperThread : public wxThread
 {
     wxMessageQueue<GitLiteThreadRequest*> m_queue;
+    bool m_cancel;
 
 public:
     GitLiteHelperThread();
@@ -48,6 +50,14 @@ public:
      * @note This call must be called from the context of other thread (e.g. main thread)
      */
     void Start(int priority = WXTHREAD_DEFAULT_PRIORITY);
+    /**
+     * @brief cancel the current request
+     */
+    void SetCancel(bool cancel) { this->m_cancel = cancel; }
+    /**
+     * @brief cancel the current request??
+     */
+    bool IsCancel() const { return m_cancel; }
 };
 
 #endif // GITLITEHELPERTHREAD_H

@@ -2,6 +2,7 @@
 
 GitLiteHelperThread::GitLiteHelperThread()
     : wxThread(wxTHREAD_JOINABLE)
+    , m_cancel(false)
 {
 }
 
@@ -14,7 +15,7 @@ void* GitLiteHelperThread::Entry()
         if(TestDestroy()) break;
         GitLiteThreadRequest* request = NULL;
         if(m_queue.ReceiveTimeout(50, request) == wxMSGQUEUE_NO_ERROR) {
-            request->Process();
+            request->Process(this);
             wxDELETE(request);
         }
     }

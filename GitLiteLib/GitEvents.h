@@ -37,6 +37,8 @@ protected:
     int m_current;
     bool m_cancelled;
     bool m_error;
+    wxString m_url;
+    wxString m_path;
 
 public:
     GitLiteCloneEvent(wxEventType commandType = wxEVT_NULL, int winid = 0);
@@ -53,6 +55,10 @@ public:
     bool IsDone() const { return m_total == m_current; }
     void SetError(bool error) { this->m_error = error; }
     bool IsError() const { return m_error; }
+    void SetPath(const wxString& path) { this->m_path = path; }
+    void SetUrl(const wxString& url) { this->m_url = url; }
+    const wxString& GetPath() const { return m_path; }
+    const wxString& GetUrl() const { return m_url; }
 };
 
 typedef void (wxEvtHandler::*GitLiteProgressEventFunction)(GitLiteCloneEvent&);
@@ -62,6 +68,7 @@ typedef void (wxEvtHandler::*GitLiteProgressEventFunction)(GitLiteCloneEvent&);
 // Define the GIT events
 //========================================
 
+wxDECLARE_EXPORTED_EVENT(WXDLLIMPEXP_LIBGIT, wxEVT_GIT_CLONE_STARTED, GitLiteCloneEvent);
 wxDECLARE_EXPORTED_EVENT(WXDLLIMPEXP_LIBGIT, wxEVT_GIT_CLONE_PROGRESS, GitLiteCloneEvent);
 wxDECLARE_EXPORTED_EVENT(WXDLLIMPEXP_LIBGIT, wxEVT_GIT_CLONE_ERROR, GitLiteCloneEvent);
 wxDECLARE_EXPORTED_EVENT(WXDLLIMPEXP_LIBGIT, wxEVT_GIT_CLONE_COMPLETED, GitLiteCloneEvent);

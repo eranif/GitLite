@@ -36,12 +36,12 @@ protected:
 public:
     GitLiteRepo();
     ~GitLiteRepo();
-
+    GitLiteHelperThread& GetHelperThread() { return m_thread; }
     const wxString& GetRepoPath() const { return m_repoPath; }
     const wxString& GetRepoURL() const { return m_repoURL; }
 
-    void SetRepo(git_repository* repo) {this->m_repo = repo;}
-    
+    void SetRepo(git_repository* repo) { this->m_repo = repo; }
+
     /**
      * @brief initialize the library
      */

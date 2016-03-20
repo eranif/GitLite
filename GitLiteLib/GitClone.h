@@ -11,13 +11,14 @@ class GitClone : public GitLiteThreadRequest
 {
     wxString m_url;
     wxString m_folder;
+    GitLiteHelperThread* m_thread;
 
 protected:
     static int FetchProgress(const git_transfer_progress* stats, void* payload);
     static void CheckoutProgress(const char* path, size_t completed_steps, size_t total_steps, void* payload);
 
 public:
-    virtual void Process();
+    virtual void Process(GitLiteHelperThread* thread);
 
     GitClone(wxEvtHandler* sink, const wxString& url, const wxString& targetFolder);
     ~GitClone();
