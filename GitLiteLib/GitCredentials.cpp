@@ -10,7 +10,7 @@ GitCredentials::GitCredentials() {}
 
 GitCredentials::~GitCredentials() {}
 
-int GitCredentials::CloneCredentials(
+int GitCredentials::OnCredentials(
     git_cred** out, const char* url, const char* username_from_url, unsigned int allowed_types, void* payload)
 {
     // Ask for password from the UI

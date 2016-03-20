@@ -62,7 +62,7 @@ void GitClone::Process()
     clone_opts.checkout_opts = GIT_CHECKOUT_OPTIONS_INIT;
     clone_opts.fetch_opts.callbacks.payload = this;
     clone_opts.fetch_opts.callbacks.transfer_progress = GitClone::FetchProgress;
-    clone_opts.fetch_opts.callbacks.credentials = GitCredentials::CloneCredentials;
+    clone_opts.fetch_opts.callbacks.credentials = GitCredentials::OnCredentials;
     giterr_clear();
     git_repository* repo = NULL;
 
