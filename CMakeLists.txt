@@ -1,0 +1,11 @@
+cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
+include(FindLibSSH2)
+include(FindLibGit2)
+
+message("-- LIBSSH2_INCLUDE: ${LIBSSH2_INCLUDE}")
+message("-- LIBSSH2_LIBRARY: ${LIBSSH2_LIBRARY}")
+message("-- LIBGIT2_INCLUDE: ${LIBGIT2_INCLUDE}")
+message("-- LIBGIT2_LIBRARY: ${LIBGIT2_LIBRARY}")
