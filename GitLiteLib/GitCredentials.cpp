@@ -4,6 +4,8 @@
 #include <git2/transport.h>
 #include "GitCommandBase.h"
 
+#define __C(s) s.mb_str(wxConvUTF8).data()
+
 GitCredentials::GitCredentials() {}
 
 GitCredentials::~GitCredentials() {}
@@ -24,7 +26,15 @@ int GitCredentials::CloneCredentials(
         return git_cred_userpass_plaintext_new(
             out, event.GetUser().mb_str(wxConvUTF8).data(), event.GetPass().mb_str(wxConvUTF8).data());
     } else if(allowed_types & GIT_CREDTYPE_SSH_KEY) {
-        return git_cred_ssh_key_from_agent(out, wxGetUserId().mb_str(wxConvUTF8).data());
+        GitLiteCredEvent event(wxEVT_GIT_CRED_SSH_KEYS_REQUIRED);
+        event.SetUser(username_from_url);
+        GitCommandBase* gitCloneObj = reinterpret_cast<GitCommandBase*>(payload);
+        gitCloneObj->GetSink()->ProcessEvent(event);
+        if(event.IsCancelled()) {
+            return GIT_EUSER;
+        }
+        return git_cred_ssh_key_new(
+            out, __C(event.GetUser()), __C(event.GetPublicKey()), __C(event.GetPrivateKey()), __C(event.GetPass()));
     } else {
         return GIT_EUSER;
     }

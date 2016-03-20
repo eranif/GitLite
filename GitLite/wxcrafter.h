@@ -21,6 +21,7 @@
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
 #include <wx/button.h>
+#include <wx/filepicker.h>
 #if wxVERSION_NUMBER >= 2900
 #include <wx/persist.h>
 #include <wx/persist/toplevel.h>
@@ -77,6 +78,37 @@ public:
     wxTextCtrl* GetTextCtrlPassword() { return m_textCtrlPassword; }
     UserNamePasswordDlgBase(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Username/Password"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(-1,-1), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
     virtual ~UserNamePasswordDlgBase();
+};
+
+
+class SSHKeysDlgBase : public wxDialog
+{
+protected:
+    wxStaticText* m_staticText47;
+    wxFilePickerCtrl* m_filePickerPrivateKey;
+    wxStaticText* m_staticText51;
+    wxFilePickerCtrl* m_filePickerPublicKey;
+    wxStaticText* m_staticText55;
+    wxTextCtrl* m_textCtrlPasphrase;
+    wxStaticText* m_staticText59;
+    wxTextCtrl* m_textCtrlRemoteUsername;
+    wxStdDialogButtonSizer* m_stdBtnSizer39;
+    wxButton* m_button41;
+    wxButton* m_button43;
+
+protected:
+
+public:
+    wxStaticText* GetStaticText47() { return m_staticText47; }
+    wxFilePickerCtrl* GetFilePickerPrivateKey() { return m_filePickerPrivateKey; }
+    wxStaticText* GetStaticText51() { return m_staticText51; }
+    wxFilePickerCtrl* GetFilePickerPublicKey() { return m_filePickerPublicKey; }
+    wxStaticText* GetStaticText55() { return m_staticText55; }
+    wxTextCtrl* GetTextCtrlPasphrase() { return m_textCtrlPasphrase; }
+    wxStaticText* GetStaticText59() { return m_staticText59; }
+    wxTextCtrl* GetTextCtrlRemoteUsername() { return m_textCtrlRemoteUsername; }
+    SSHKeysDlgBase(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("SSH Keys"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(-1,-1), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+    virtual ~SSHKeysDlgBase();
 };
 
 #endif

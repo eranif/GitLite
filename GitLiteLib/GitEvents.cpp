@@ -61,6 +61,7 @@ GitLiteCloneEvent::~GitLiteCloneEvent() {}
 // Request for credentials event
 //====================================
 wxDEFINE_EVENT(wxEVT_GIT_CRED_REQUIRED, GitLiteCredEvent);
+wxDEFINE_EVENT(wxEVT_GIT_CRED_SSH_KEYS_REQUIRED, GitLiteCredEvent);
 GitLiteCredEvent::GitLiteCredEvent(wxEventType commandType, int winid)
     : GitLiteEvent(commandType, winid)
     , m_cancelled(false)
@@ -77,5 +78,7 @@ GitLiteCredEvent& GitLiteCredEvent::operator=(const GitLiteCredEvent& src)
     m_cancelled = src.m_cancelled;
     m_user = src.m_user;
     m_pass = src.m_pass;
+    m_privateKey = src.m_privateKey;
+    m_publicKey = src.m_publicKey;
     return *this;
 }

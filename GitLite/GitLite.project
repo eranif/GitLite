@@ -191,5 +191,7 @@
   <VirtualDirectory Name="UI">
     <File Name="UserNamePasswordDlg.h"/>
     <File Name="UserNamePasswordDlg.cpp"/>
+    <File Name="SSHKeysDlg.h"/>
+    <File Name="SSHKeysDlg.cpp"/>
   </VirtualDirectory>
 </CodeLite_Project>

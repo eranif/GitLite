@@ -3,6 +3,7 @@
 #include <wx/textdlg.h>
 #include <wx/msgdlg.h>
 #include "UserNamePasswordDlg.h"
+#include "SSHKeysDlg.h"
 
 MainFrame::MainFrame(wxWindow* parent)
     : MainFrameBaseClass(parent)
@@ -13,6 +14,7 @@ MainFrame::MainFrame(wxWindow* parent)
     m_repo.Bind(wxEVT_GIT_CLONE_ERROR, &MainFrame::OnCloneError, this);
     m_repo.Bind(wxEVT_GIT_CLONE_STARTED, &MainFrame::OnCloneStart, this);
     m_repo.Bind(wxEVT_GIT_CRED_REQUIRED, &MainFrame::OnGitCredentials, this);
+    m_repo.Bind(wxEVT_GIT_CRED_SSH_KEYS_REQUIRED, &MainFrame::OnGitSshKeysCredentials, this);
 }
 
 MainFrame::~MainFrame()
@@ -22,6 +24,7 @@ MainFrame::~MainFrame()
     m_repo.Unbind(wxEVT_GIT_CLONE_ERROR, &MainFrame::OnCloneError, this);
     m_repo.Unbind(wxEVT_GIT_CLONE_STARTED, &MainFrame::OnCloneStart, this);
     m_repo.Unbind(wxEVT_GIT_CRED_REQUIRED, &MainFrame::OnGitCredentials, this);
+    m_repo.Unbind(wxEVT_GIT_CRED_SSH_KEYS_REQUIRED, &MainFrame::OnGitSshKeysCredentials, this);
 }
 
 void MainFrame::OnExit(wxCommandEvent& event)
@@ -102,6 +105,20 @@ void MainFrame::OnGitCredentials(GitLiteCredEvent& event)
     if(dlg.ShowModal() == wxID_OK) {
         event.SetUser(dlg.GetTextCtrlUsername()->GetValue());
         event.SetPass(dlg.GetTextCtrlPassword()->GetValue());
+    } else {
+        event.SetCancelled(true);
+    }
+}
+
+void MainFrame::OnGitSshKeysCredentials(GitLiteCredEvent& event)
+{
+    event.Skip();
+    SSHKeysDlg dlg(this);
+    if(dlg.ShowModal() == wxID_OK) {
+        event.SetUser(dlg.GetTextCtrlRemoteUsername()->GetValue());
+        event.SetPass(dlg.GetTextCtrlPasphrase()->GetValue());
+        event.SetPrivateKey(dlg.GetFilePickerPrivateKey()->GetPath());
+        event.SetPublicKey(dlg.GetFilePickerPublicKey()->GetPath());
     } else {
         event.SetCancelled(true);
     }

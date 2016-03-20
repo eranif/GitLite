@@ -4,6 +4,7 @@
 /// a wxCommandEvent that takes ownership of the clientData
 #include <wx/event.h>
 #include "GitLiteExports.h"
+#include <wx/filename.h>
 
 /**
  * @class GitLiteEvent
@@ -72,7 +73,9 @@ class WXDLLIMPEXP_LIBGIT GitLiteCredEvent : public GitLiteEvent
 {
 protected:
     wxString m_user;
-    wxString m_pass;
+    wxString m_pass; // password or passphrase
+    wxString m_privateKey;
+    wxString m_publicKey;
     bool m_cancelled;
 
 public:
@@ -87,6 +90,10 @@ public:
     bool IsCancelled() const { return m_cancelled; }
     const wxString& GetPass() const { return m_pass; }
     const wxString& GetUser() const { return m_user; }
+    void SetPrivateKey(const wxString& privateKey) { this->m_privateKey = privateKey; }
+    void SetPublicKey(const wxString& publicKey) { this->m_publicKey = publicKey; }
+    const wxString& GetPrivateKey() const { return m_privateKey; }
+    const wxString& GetPublicKey() const { return m_publicKey; }
 };
 typedef void (wxEvtHandler::*GitLiteCredEventFunction)(GitLiteCredEvent&);
 #define GitLiteCredEventHandler(func) wxEVENT_HANDLER_CAST(GitLiteCredEventFunction, func)
@@ -100,5 +107,6 @@ wxDECLARE_EXPORTED_EVENT(WXDLLIMPEXP_LIBGIT, wxEVT_GIT_CLONE_PROGRESS, GitLiteCl
 wxDECLARE_EXPORTED_EVENT(WXDLLIMPEXP_LIBGIT, wxEVT_GIT_CLONE_ERROR, GitLiteCloneEvent);
 wxDECLARE_EXPORTED_EVENT(WXDLLIMPEXP_LIBGIT, wxEVT_GIT_CLONE_COMPLETED, GitLiteCloneEvent);
 wxDECLARE_EXPORTED_EVENT(WXDLLIMPEXP_LIBGIT, wxEVT_GIT_CRED_REQUIRED, GitLiteCredEvent);
+wxDECLARE_EXPORTED_EVENT(WXDLLIMPEXP_LIBGIT, wxEVT_GIT_CRED_SSH_KEYS_REQUIRED, GitLiteCredEvent);
 
 #endif // GIT_EVENTS_H

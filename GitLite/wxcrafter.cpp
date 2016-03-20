@@ -160,3 +160,97 @@ UserNamePasswordDlgBase::UserNamePasswordDlgBase(wxWindow* parent, wxWindowID id
 UserNamePasswordDlgBase::~UserNamePasswordDlgBase()
 {
 }
+
+SSHKeysDlgBase::SSHKeysDlgBase(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+    : wxDialog(parent, id, title, pos, size, style)
+{
+    if ( !bBitmapLoaded ) {
+        // We need to initialise the default bitmap handler
+        wxXmlResource::Get()->AddHandler(new wxBitmapXmlHandler);
+        wxC9ED9InitBitmapResources();
+        bBitmapLoaded = true;
+    }
+    
+    wxBoxSizer* boxSizer35 = new wxBoxSizer(wxVERTICAL);
+    this->SetSizer(boxSizer35);
+    
+    wxFlexGridSizer* flexGridSizer45 = new wxFlexGridSizer(0, 2, 0, 0);
+    flexGridSizer45->SetFlexibleDirection( wxBOTH );
+    flexGridSizer45->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+    flexGridSizer45->AddGrowableCol(1);
+    
+    boxSizer35->Add(flexGridSizer45, 1, wxALL|wxEXPAND, 5);
+    
+    m_staticText47 = new wxStaticText(this, wxID_ANY, _("SSH Private key:"), wxDefaultPosition, wxSize(-1,-1), 0);
+    
+    flexGridSizer45->Add(m_staticText47, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
+    
+    m_filePickerPrivateKey = new wxFilePickerCtrl(this, wxID_ANY, wxEmptyString, _("Select a file"), wxT("*"), wxDefaultPosition, wxSize(-1,-1), wxFLP_DEFAULT_STYLE|wxFLP_USE_TEXTCTRL|wxFLP_SMALL);
+    m_filePickerPrivateKey->SetFocus();
+    
+    flexGridSizer45->Add(m_filePickerPrivateKey, 0, wxALL|wxEXPAND, 5);
+    
+    m_staticText51 = new wxStaticText(this, wxID_ANY, _("SSH Public key:"), wxDefaultPosition, wxSize(-1,-1), 0);
+    
+    flexGridSizer45->Add(m_staticText51, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
+    
+    m_filePickerPublicKey = new wxFilePickerCtrl(this, wxID_ANY, wxEmptyString, _("Select a file"), wxT("*"), wxDefaultPosition, wxSize(-1,-1), wxFLP_DEFAULT_STYLE|wxFLP_SMALL);
+    
+    flexGridSizer45->Add(m_filePickerPublicKey, 0, wxALL|wxEXPAND, 5);
+    
+    m_staticText55 = new wxStaticText(this, wxID_ANY, _("Passphrase:"), wxDefaultPosition, wxSize(-1,-1), 0);
+    
+    flexGridSizer45->Add(m_staticText55, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
+    
+    m_textCtrlPasphrase = new wxTextCtrl(this, wxID_ANY, wxT(""), wxDefaultPosition, wxSize(-1,-1), wxTE_PASSWORD);
+    #if wxVERSION_NUMBER >= 3000
+    m_textCtrlPasphrase->SetHint(wxT(""));
+    #endif
+    
+    flexGridSizer45->Add(m_textCtrlPasphrase, 0, wxALL|wxEXPAND, 5);
+    
+    m_staticText59 = new wxStaticText(this, wxID_ANY, _("Remote username:"), wxDefaultPosition, wxSize(-1,-1), 0);
+    
+    flexGridSizer45->Add(m_staticText59, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
+    
+    m_textCtrlRemoteUsername = new wxTextCtrl(this, wxID_ANY, wxT(""), wxDefaultPosition, wxSize(-1,-1), 0);
+    #if wxVERSION_NUMBER >= 3000
+    m_textCtrlRemoteUsername->SetHint(wxT(""));
+    #endif
+    
+    flexGridSizer45->Add(m_textCtrlRemoteUsername, 0, wxALL|wxEXPAND, 5);
+    
+    m_stdBtnSizer39 = new wxStdDialogButtonSizer();
+    
+    boxSizer35->Add(m_stdBtnSizer39, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 10);
+    
+    m_button41 = new wxButton(this, wxID_OK, wxT(""), wxDefaultPosition, wxSize(-1, -1), 0);
+    m_button41->SetDefault();
+    m_stdBtnSizer39->AddButton(m_button41);
+    
+    m_button43 = new wxButton(this, wxID_CANCEL, wxT(""), wxDefaultPosition, wxSize(-1, -1), 0);
+    m_stdBtnSizer39->AddButton(m_button43);
+    m_stdBtnSizer39->Realize();
+    
+    SetName(wxT("SSHKeysDlgBase"));
+    SetSize(-1,-1);
+    if (GetSizer()) {
+         GetSizer()->Fit(this);
+    }
+    if(GetParent()) {
+        CentreOnParent(wxBOTH);
+    } else {
+        CentreOnScreen(wxBOTH);
+    }
+#if wxVERSION_NUMBER >= 2900
+    if(!wxPersistenceManager::Get().Find(this)) {
+        wxPersistenceManager::Get().RegisterAndRestore(this);
+    } else {
+        wxPersistenceManager::Get().Restore(this);
+    }
+#endif
+}
+
+SSHKeysDlgBase::~SSHKeysDlgBase()
+{
+}
