@@ -104,7 +104,8 @@ void MainFrame::OnCloneStart(GitLiteCloneEvent& event)
 {
     wxString message;
     message << _("Cloning repository: ") << event.GetUrl();
-    m_cloneProgress = new wxProgressDialog(_("Git Clone"), message, 100, this, wxPD_CAN_ABORT | wxPD_ELAPSED_TIME);
+    m_cloneProgress =
+        new wxProgressDialog(_("Git Clone"), message, 100, this, wxPD_CAN_ABORT | wxPD_ELAPSED_TIME | wxPD_AUTO_HIDE);
     m_cloneProgress->Show();
 }
 
