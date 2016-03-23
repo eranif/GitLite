@@ -82,7 +82,7 @@ public:
      */
     size_t ArraySize() const;
     /**
-     * @brief return array as a given position
+     * @brief return an array item at a given position
      * @param index item position in the array
      * @return valid wxSimpleJSON::Ptr_t obj is a Null object (call wxSimpleJSON::IsNull() to test for null)
      */
