@@ -24,9 +24,12 @@ public:
         kArray,  // 5
         kObject, // 6
     };
-
     virtual ~wxSimpleJSON();
+
+private:
+    // Constructor is private. The way to create an object is by using the ::Create method
     wxSimpleJSON();
+    
     /**
      * @brief the deleter pointer
      */
