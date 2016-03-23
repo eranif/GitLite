@@ -222,3 +222,11 @@ bool wxSimpleJSON::DeleteProperty(const wxString& name)
     cJSON_DeleteItemFromObject(m_d, name.mb_str(wxConvUTF8).data());
     return true;
 }
+
+wxString wxSimpleJSON::Print(bool pretty, const wxMBConv& conv) const
+{
+    char* b = pretty ? cJSON_Print(m_d) : cJSON_PrintUnformatted(m_d);
+    wxString s(b, conv);
+    free(b);
+    return s;
+}

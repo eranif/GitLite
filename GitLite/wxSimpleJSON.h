@@ -2,11 +2,11 @@
 #define WX_SIMPLE_JSON_H
 
 #include <wx/sharedptr.h>
-#include "cJSON.h"
 #include <wx/string.h>
 #include <wx/arrstr.h>
 #include <wx/filename.h>
 
+typedef struct cJSON cJSON;
 class wxSimpleJSON
 {
 protected:
@@ -59,12 +59,12 @@ public:
      * @note Check for IsNull()
      */
     static wxSimpleJSON::Ptr_t Create(const wxFileName& filename, const wxMBConv& conv = wxConvUTF8);
-    
+
     /**
      * @brief save the content of this object to a file
      */
     bool Save(const wxFileName& filename, const wxMBConv& conv = wxConvUTF8);
-    
+
     /**
      * @brief is this object NULL?
      */
@@ -118,25 +118,19 @@ public:
      * @brief return an object property
      */
     wxSimpleJSON::Ptr_t GetProperty(const wxString& name) const;
-    
+
     /**
      * @brief delete property with a given name
      */
     bool DeleteProperty(const wxString& name);
-    
+
     /**
      * @brief convert this JSON object to string
      * @param pretty apply indentations + spacing
      * @param conv string conversion object
      * @return JSON object as string
      */
-    inline wxString Print(bool pretty = true, const wxMBConv& conv = wxConvUTF8) const
-    {
-        char* b = pretty ? cJSON_Print(m_d) : cJSON_PrintUnformatted(m_d);
-        wxString s(b, conv);
-        free(b);
-        return s;
-    }
+    inline wxString Print(bool pretty = true, const wxMBConv& conv = wxConvUTF8) const;
 };
 
 #endif // WX_SIMPLE_JSON_H
