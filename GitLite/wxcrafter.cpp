@@ -220,11 +220,6 @@ SSHKeysDlgBase::SSHKeysDlgBase(wxWindow* parent, wxWindowID id, const wxString& 
     
     flexGridSizer45->Add(m_textCtrlRemoteUsername, 0, wxALL|wxEXPAND, 5);
     
-    m_checkBoxRemember = new wxCheckBox(this, wxID_ANY, _("Remember my answer and don't ask me again"), wxDefaultPosition, wxSize(-1,-1), 0);
-    m_checkBoxRemember->SetValue(false);
-    
-    boxSizer35->Add(m_checkBoxRemember, 0, wxALL, 5);
-    
     m_stdBtnSizer39 = new wxStdDialogButtonSizer();
     
     boxSizer35->Add(m_stdBtnSizer39, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 10);

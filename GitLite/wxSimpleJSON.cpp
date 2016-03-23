@@ -209,3 +209,16 @@ bool wxSimpleJSON::Save(const wxFileName& filename, const wxMBConv& conv)
     }
     return false;
 }
+
+bool wxSimpleJSON::DeleteProperty(const wxString& name)
+{
+    if(!m_d || (m_d->type != cJSON_Object)) {
+        return false;
+    }
+    cJSON* p = cJSON_GetObjectItem(m_d, name.mb_str(wxConvUTF8).data());
+    if(!p) {
+        return false;
+    }
+    cJSON_DeleteItemFromObject(m_d, name.mb_str(wxConvUTF8).data());
+    return true;
+}

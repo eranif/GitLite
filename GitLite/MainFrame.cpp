@@ -4,6 +4,8 @@
 #include <wx/msgdlg.h>
 #include "UserNamePasswordDlg.h"
 #include "SSHKeysDlg.h"
+#include "GitConfig.h"
+#include "GitCloneDialog.h"
 
 MainFrame::MainFrame(wxWindow* parent)
     : MainFrameBaseClass(parent)
@@ -45,12 +47,21 @@ void MainFrame::OnAbout(wxCommandEvent& event)
 
 void MainFrame::OnClone(wxCommandEvent& event)
 {
-    wxString repoURL = ::wxGetTextFromUser(_("Repository URL"));
-    if(repoURL.IsEmpty()) return;
+    GitCloneDialog dlg(this);
+    GitConfig conf;
+    conf.Load();
 
-    wxString repoPath = ::wxGetTextFromUser(_("Clone directory"));
-    if(repoPath.IsEmpty()) return;
-    m_repo.Clone(repoURL, repoPath);
+    wxString url, path;
+    conf.GetLastCloneInfo(url, path);
+    dlg.GetTextCtrlURL()->ChangeValue(url);
+    dlg.GetDirPicker()->SetPath(path);
+    if(dlg.ShowModal() == wxID_OK) {
+        url = dlg.GetTextCtrlURL()->GetValue();
+        path = dlg.GetDirPicker()->GetPath();
+        conf.AddLastCloneInfo(url, path);
+        conf.Save();
+        m_repo.Clone(url, path);
+    }
 }
 
 void MainFrame::OnCloneError(GitLiteCloneEvent& event)
@@ -114,7 +125,28 @@ void MainFrame::OnGitSshKeysCredentials(GitLiteCredEvent& event)
 {
     event.Skip();
     SSHKeysDlg dlg(this);
+    GitConfig conf;
+    conf.Load();
+
+    // Load settings
+    wxString publicKey, privateKey, remoteUser, passphrase;
+    conf.GetSshKeys(publicKey, privateKey, remoteUser, passphrase);
+    dlg.GetTextCtrlPasphrase()->ChangeValue(passphrase);
+
+    if(event.GetUser().IsEmpty()) {
+        dlg.GetTextCtrlRemoteUsername()->ChangeValue(remoteUser);
+    } else {
+        dlg.GetTextCtrlRemoteUsername()->Enable(false);
+        dlg.GetTextCtrlRemoteUsername()->ChangeValue(event.GetUser());
+    }
+    dlg.GetFilePickerPrivateKey()->SetPath(privateKey);
+    dlg.GetFilePickerPublicKey()->SetPath(publicKey);
     if(dlg.ShowModal() == wxID_OK) {
+        // Store the values
+        conf.AddSshKeys(dlg.GetFilePickerPublicKey()->GetPath(), dlg.GetFilePickerPrivateKey()->GetPath(),
+            dlg.GetTextCtrlRemoteUsername()->GetValue(), dlg.GetTextCtrlPasphrase()->GetValue());
+        conf.Save();
+        // Return the values to the user
         event.SetUser(dlg.GetTextCtrlRemoteUsername()->GetValue());
         event.SetPass(dlg.GetTextCtrlPasphrase()->GetValue());
         event.SetPrivateKey(dlg.GetFilePickerPrivateKey()->GetPath());

@@ -118,7 +118,12 @@ public:
      * @brief return an object property
      */
     wxSimpleJSON::Ptr_t GetProperty(const wxString& name) const;
-
+    
+    /**
+     * @brief delete property with a given name
+     */
+    bool DeleteProperty(const wxString& name);
+    
     /**
      * @brief convert this JSON object to string
      * @param pretty apply indentations + spacing

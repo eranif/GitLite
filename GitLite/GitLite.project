@@ -34,6 +34,8 @@
     <File Name="wxcrafter.cpp"/>
     <File Name="wxcrafter_bitmaps.cpp"/>
     <File Name="CMakeLists.txt"/>
+    <File Name="GitConfig.h"/>
+    <File Name="GitConfig.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="MainFrame.h"/>
