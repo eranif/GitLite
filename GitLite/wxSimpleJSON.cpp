@@ -1,4 +1,4 @@
-#include "GitLiteJSON.h"
+#include "wxSimpleJSON.h"
 #include "cJSON.h"
 
 static cJSON* cJSONAllocNew()
@@ -69,4 +69,22 @@ wxSimpleJSON& wxSimpleJSON::Add(const wxString& name, double value)
 {
     cJSON_AddNumberToObject(m_d, name.mb_str(wxConvUTF8).data(), value);
     return *this;
+}
+
+wxSimpleJSON& wxSimpleJSON::ArrayAdd(const wxArrayString& arr, const wxMBConv& conv)
+{
+    wxSimpleJSON::Ptr_t parr = Create(wxSimpleJSON::kArray);
+    for(size_t i = 0; i < arr.size(); ++i) {
+        parr->ArrayAdd(arr.Item(i), conv);
+    }
+    return ArrayAdd(parr);
+}
+
+wxSimpleJSON& wxSimpleJSON::Add(const wxString& name, const wxArrayString& arr, const wxMBConv& conv)
+{
+    wxSimpleJSON::Ptr_t parr = Create(wxSimpleJSON::kArray);
+    for(size_t i = 0; i < arr.size(); ++i) {
+        parr->ArrayAdd(arr.Item(i), conv);
+    }
+    return Add(name, parr);
 }

@@ -4,6 +4,7 @@
 #include <wx/sharedptr.h>
 #include "cJSON.h"
 #include <wx/string.h>
+#include <wx/arrstr.h>
 
 class wxSimpleJSON
 {
@@ -48,13 +49,20 @@ public:
     wxSimpleJSON& ArrayAdd(wxSimpleJSON::Ptr_t obj);
     wxSimpleJSON& ArrayAdd(const wxString& value, const wxMBConv& conv = wxConvUTF8);
     wxSimpleJSON& ArrayAdd(double value);
+    wxSimpleJSON& ArrayAdd(const wxArrayString& arr, const wxMBConv& conv = wxConvUTF8);
 
     // Object manipulation
     wxSimpleJSON& Add(const wxString& name, wxSimpleJSON::Ptr_t obj);
     wxSimpleJSON& Add(const wxString& name, const wxString& value, const wxMBConv& conv = wxConvUTF8);
     wxSimpleJSON& Add(const wxString& name, double value);
+    wxSimpleJSON& Add(const wxString& name, const wxArrayString& arr, const wxMBConv& conv = wxConvUTF8);
 
-    // Printing
+    /**
+     * @brief convert this JSON object to string
+     * @param pretty apply indentations + spacing
+     * @param conv string conversion object
+     * @return JSON object as string
+     */
     inline wxString ToString(bool pretty = true, const wxMBConv& conv = wxConvUTF8) const
     {
         char* b = pretty ? cJSON_Print(m_d) : cJSON_PrintUnformatted(m_d);

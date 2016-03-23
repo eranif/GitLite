@@ -199,7 +199,7 @@
   <VirtualDirectory Name="wxSimpleJSON">
     <File Name="cJSON.c"/>
     <File Name="cJSON.h"/>
-    <File Name="GitLiteJSON.cpp"/>
-    <File Name="GitLiteJSON.h"/>
+    <File Name="wxSimpleJSON.h"/>
+    <File Name="wxSimpleJSON.cpp"/>
   </VirtualDirectory>
 </CodeLite_Project>
