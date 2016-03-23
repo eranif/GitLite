@@ -220,6 +220,11 @@ SSHKeysDlgBase::SSHKeysDlgBase(wxWindow* parent, wxWindowID id, const wxString& 
     
     flexGridSizer45->Add(m_textCtrlRemoteUsername, 0, wxALL|wxEXPAND, 5);
     
+    m_checkBoxRemember = new wxCheckBox(this, wxID_ANY, _("Remember my answer and don't ask me again"), wxDefaultPosition, wxSize(-1,-1), 0);
+    m_checkBoxRemember->SetValue(false);
+    
+    boxSizer35->Add(m_checkBoxRemember, 0, wxALL, 5);
+    
     m_stdBtnSizer39 = new wxStdDialogButtonSizer();
     
     boxSizer35->Add(m_stdBtnSizer39, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 10);
@@ -252,5 +257,79 @@ SSHKeysDlgBase::SSHKeysDlgBase(wxWindow* parent, wxWindowID id, const wxString& 
 }
 
 SSHKeysDlgBase::~SSHKeysDlgBase()
+{
+}
+
+GitCloneDialogBase::GitCloneDialogBase(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+    : wxDialog(parent, id, title, pos, size, style)
+{
+    if ( !bBitmapLoaded ) {
+        // We need to initialise the default bitmap handler
+        wxXmlResource::Get()->AddHandler(new wxBitmapXmlHandler);
+        wxC9ED9InitBitmapResources();
+        bBitmapLoaded = true;
+    }
+    
+    wxBoxSizer* boxSizer67 = new wxBoxSizer(wxVERTICAL);
+    this->SetSizer(boxSizer67);
+    
+    wxFlexGridSizer* flexGridSizer75 = new wxFlexGridSizer(0, 2, 0, 0);
+    flexGridSizer75->SetFlexibleDirection( wxBOTH );
+    flexGridSizer75->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+    flexGridSizer75->AddGrowableCol(1);
+    
+    boxSizer67->Add(flexGridSizer75, 1, wxALL|wxEXPAND, 5);
+    
+    m_staticText77 = new wxStaticText(this, wxID_ANY, _("Repository URL:"), wxDefaultPosition, wxSize(-1,-1), 0);
+    
+    flexGridSizer75->Add(m_staticText77, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
+    
+    m_textCtrlURL = new wxTextCtrl(this, wxID_ANY, wxT(""), wxDefaultPosition, wxSize(-1,-1), 0);
+    #if wxVERSION_NUMBER >= 3000
+    m_textCtrlURL->SetHint(_("Repository URL"));
+    #endif
+    
+    flexGridSizer75->Add(m_textCtrlURL, 0, wxALL|wxEXPAND, 5);
+    
+    m_staticText81 = new wxStaticText(this, wxID_ANY, _("Clone directory:"), wxDefaultPosition, wxSize(-1,-1), 0);
+    
+    flexGridSizer75->Add(m_staticText81, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
+    
+    m_dirPicker = new wxDirPickerCtrl(this, wxID_ANY, wxEmptyString, _("Select a folder"), wxDefaultPosition, wxSize(-1,-1), wxDIRP_SMALL|wxDIRP_DEFAULT_STYLE|wxDIRP_USE_TEXTCTRL|wxDIRP_DIR_MUST_EXIST);
+    
+    flexGridSizer75->Add(m_dirPicker, 0, wxALL|wxEXPAND, 5);
+    
+    m_stdBtnSizer69 = new wxStdDialogButtonSizer();
+    
+    boxSizer67->Add(m_stdBtnSizer69, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 10);
+    
+    m_button71 = new wxButton(this, wxID_OK, wxT(""), wxDefaultPosition, wxSize(-1, -1), 0);
+    m_button71->SetDefault();
+    m_stdBtnSizer69->AddButton(m_button71);
+    
+    m_button73 = new wxButton(this, wxID_CANCEL, wxT(""), wxDefaultPosition, wxSize(-1, -1), 0);
+    m_stdBtnSizer69->AddButton(m_button73);
+    m_stdBtnSizer69->Realize();
+    
+    SetName(wxT("GitCloneDialogBase"));
+    SetSize(-1,-1);
+    if (GetSizer()) {
+         GetSizer()->Fit(this);
+    }
+    if(GetParent()) {
+        CentreOnParent(wxBOTH);
+    } else {
+        CentreOnScreen(wxBOTH);
+    }
+#if wxVERSION_NUMBER >= 2900
+    if(!wxPersistenceManager::Get().Find(this)) {
+        wxPersistenceManager::Get().RegisterAndRestore(this);
+    } else {
+        wxPersistenceManager::Get().Restore(this);
+    }
+#endif
+}
+
+GitCloneDialogBase::~GitCloneDialogBase()
 {
 }

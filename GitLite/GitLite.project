@@ -193,5 +193,13 @@
     <File Name="UserNamePasswordDlg.cpp"/>
     <File Name="SSHKeysDlg.h"/>
     <File Name="SSHKeysDlg.cpp"/>
+    <File Name="GitCloneDialog.h"/>
+    <File Name="GitCloneDialog.cpp"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="wxSimpleJSON">
+    <File Name="cJSON.c"/>
+    <File Name="cJSON.h"/>
+    <File Name="GitLiteJSON.cpp"/>
+    <File Name="GitLiteJSON.h"/>
   </VirtualDirectory>
 </CodeLite_Project>

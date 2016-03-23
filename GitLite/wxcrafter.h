@@ -22,6 +22,7 @@
 #include <wx/textctrl.h>
 #include <wx/button.h>
 #include <wx/filepicker.h>
+#include <wx/checkbox.h>
 #if wxVERSION_NUMBER >= 2900
 #include <wx/persist.h>
 #include <wx/persist/toplevel.h>
@@ -92,6 +93,7 @@ protected:
     wxTextCtrl* m_textCtrlPasphrase;
     wxStaticText* m_staticText59;
     wxTextCtrl* m_textCtrlRemoteUsername;
+    wxCheckBox* m_checkBoxRemember;
     wxStdDialogButtonSizer* m_stdBtnSizer39;
     wxButton* m_button41;
     wxButton* m_button43;
@@ -107,8 +109,32 @@ public:
     wxTextCtrl* GetTextCtrlPasphrase() { return m_textCtrlPasphrase; }
     wxStaticText* GetStaticText59() { return m_staticText59; }
     wxTextCtrl* GetTextCtrlRemoteUsername() { return m_textCtrlRemoteUsername; }
+    wxCheckBox* GetCheckBoxRemember() { return m_checkBoxRemember; }
     SSHKeysDlgBase(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("SSH Keys"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(-1,-1), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
     virtual ~SSHKeysDlgBase();
+};
+
+
+class GitCloneDialogBase : public wxDialog
+{
+protected:
+    wxStaticText* m_staticText77;
+    wxTextCtrl* m_textCtrlURL;
+    wxStaticText* m_staticText81;
+    wxDirPickerCtrl* m_dirPicker;
+    wxStdDialogButtonSizer* m_stdBtnSizer69;
+    wxButton* m_button71;
+    wxButton* m_button73;
+
+protected:
+
+public:
+    wxStaticText* GetStaticText77() { return m_staticText77; }
+    wxTextCtrl* GetTextCtrlURL() { return m_textCtrlURL; }
+    wxStaticText* GetStaticText81() { return m_staticText81; }
+    wxDirPickerCtrl* GetDirPicker() { return m_dirPicker; }
+    GitCloneDialogBase(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Git Clone"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(-1,-1), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+    virtual ~GitCloneDialogBase();
 };
 
 #endif
