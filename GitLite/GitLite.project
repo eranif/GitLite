@@ -36,6 +36,8 @@
     <File Name="CMakeLists.txt"/>
     <File Name="GitConfig.h"/>
     <File Name="GitConfig.cpp"/>
+    <File Name="PersistentManager.h"/>
+    <File Name="PersistentManager.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="MainFrame.h"/>

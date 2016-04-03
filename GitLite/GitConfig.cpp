@@ -8,6 +8,7 @@ GitConfig::~GitConfig() {}
 void GitConfig::Load()
 {
     wxFileName fn(wxStandardPaths::Get().GetUserDataDir(), "GitLite.conf");
+    fn.Mkdir(wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
     m_json = wxSimpleJSON::Create(fn);
     if(m_json->IsNull()) {
         m_json = wxSimpleJSON::Create(wxString("{}"));

@@ -8,6 +8,11 @@
 //#include <git2/global.h>
 #include <git2/errors.h>
 #include <git2/transport.h>
+#include <wx/url.h>
+
+// git@bitbucket.org:eranif/gitlite.git
+// git@github.com:eranif/gitlite.git
+#define GIT_PROTOCOL "git@"
 
 GitClone::GitClone(wxEvtHandler* sink, const wxString& url, const wxString& targetFolder)
     : GitCommandBase(sink)
@@ -15,6 +20,16 @@ GitClone::GitClone(wxEvtHandler* sink, const wxString& url, const wxString& targ
     , m_folder(targetFolder)
     , m_startEventSent(false)
 {
+    // Fix the URL if needed
+    if(m_url.StartsWith(GIT_PROTOCOL)) {
+        m_url.Prepend("ssh://");
+        wxURI uri(m_url);
+        wxString host = uri.GetServer();
+        wxString path = uri.GetPath();
+        wxString user = uri.GetUser();
+        m_url.Clear();
+        m_url << "ssh://" << user << "@" << host << "/" << path; 
+    }
 }
 
 GitClone::~GitClone() {}

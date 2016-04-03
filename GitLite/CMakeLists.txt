@@ -6,6 +6,8 @@ find_package(wxWidgets COMPONENTS std stc REQUIRED)
 include( "${wxWidgets_USE_FILE}" )
 
 FILE(GLOB SRCS "*.cpp")
+FILE(GLOB C_SRCS "*.c")
+set(SRCS ${SRCS} ${C_SRCS})
 include_directories(${CMAKE_SOURCE_DIR}/GitLiteLib)
 add_executable(GitLite ${SRCS})
 target_link_libraries(GitLite GitLiteLib ${wxWidgets_LIBRARIES})
