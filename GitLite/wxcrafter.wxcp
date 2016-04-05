@@ -1583,7 +1583,7 @@
          "border": 5,
          "gbSpan": "1,1",
          "gbPosition": "0,0",
-         "m_styles": ["wxFLP_DEFAULT_STYLE", "wxFLP_SMALL"],
+         "m_styles": ["wxFLP_DEFAULT_STYLE", "wxFLP_USE_TEXTCTRL", "wxFLP_SMALL"],
          "m_sizerFlags": ["wxALL", "wxLEFT", "wxRIGHT", "wxTOP", "wxBOTTOM", "wxEXPAND"],
          "m_properties": [{
            "type": "winid",

@@ -6,6 +6,7 @@
 #include "SSHKeysDlg.h"
 #include "GitConfig.h"
 #include "GitCloneDialog.h"
+#include <wx/choicdlg.h>
 
 MainFrame::MainFrame(wxWindow* parent)
     : MainFrameBaseClass(parent)
@@ -75,10 +76,23 @@ void MainFrame::OnCloneError(GitLiteCloneEvent& event)
 
 void MainFrame::OnCloneCompleted(GitLiteCloneEvent& event)
 {
+    event.Skip();
     m_repo.SetRepo(reinterpret_cast<git_repository*>(event.GetClientData()));
     m_cloneProgress->Destroy();
     m_cloneProgress = NULL;
-    ::wxMessageBox("Repository cloned successfully");
+
+    // List all branches
+    wxArrayString localBranches, remoteBranches;
+    m_repo.GetBranches(localBranches, remoteBranches);
+
+    // Prompt the user to checkout the proper branch
+    wxString branchName =
+        ::wxGetSingleChoice(_("Select Branch to checkout"), _("Checkout branch"), localBranches, 0, this);
+    if(branchName.IsEmpty()) {
+        return;
+    }
+    
+    // Checkout branchName
 }
 
 void MainFrame::OnCloneProgress(GitLiteCloneEvent& event)
@@ -144,8 +158,10 @@ void MainFrame::OnGitSshKeysCredentials(GitLiteCredEvent& event)
     dlg.GetFilePickerPublicKey()->SetPath(publicKey);
     if(dlg.ShowModal() == wxID_OK) {
         // Store the values
-        conf.AddSshKeys(dlg.GetFilePickerPublicKey()->GetPath(), dlg.GetFilePickerPrivateKey()->GetPath(),
-            dlg.GetTextCtrlRemoteUsername()->GetValue(), dlg.GetTextCtrlPasphrase()->GetValue());
+        conf.AddSshKeys(dlg.GetFilePickerPublicKey()->GetPath(),
+                        dlg.GetFilePickerPrivateKey()->GetPath(),
+                        dlg.GetTextCtrlRemoteUsername()->GetValue(),
+                        dlg.GetTextCtrlPasphrase()->GetValue());
         conf.Save();
         // Return the values to the user
         event.SetUser(dlg.GetTextCtrlRemoteUsername()->GetValue());

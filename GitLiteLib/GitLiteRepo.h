@@ -29,10 +29,6 @@ class WXDLLIMPEXP_LIBGIT GitLiteRepo : public wxEvtHandler
     wxString m_repoPath;
     GitLiteHelperThread m_thread;
 
-protected:
-    static int FetchProgress(const git_transfer_progress* stats, void* payload);
-    static void CheckoutProgress(const char* path, size_t completed_steps, size_t total_steps, void* payload);
-
 public:
     GitLiteRepo();
     ~GitLiteRepo();
@@ -41,6 +37,7 @@ public:
     const wxString& GetRepoURL() const { return m_repoURL; }
 
     void SetRepo(git_repository* repo) { this->m_repo = repo; }
+    git_repository* GetRepoHandler() { return m_repo; }
 
     /**
      * @brief initialize the library
@@ -57,6 +54,13 @@ public:
      * In case of success, a handler to the git repository is sent back in the event
      */
     void Clone(const wxString& url, const wxString& targetFolder);
+
+    /**
+     * @brief return list of branches.
+     * @param branches [output] list of available branches
+     * @param selection [output] index of the current branch
+     */
+    void GetBranches(wxArrayString& localBranches, wxArrayString& remoteBranches);
 };
 
 #endif // WXLIBGIT_H

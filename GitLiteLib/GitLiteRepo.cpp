@@ -3,6 +3,7 @@
 #include <wx/filename.h>
 #include <git2/global.h>
 #include "GitClone.h"
+#include "GitBranch.h"
 
 //====================================
 // Git repository
@@ -21,7 +22,14 @@ void GitLiteRepo::Shutdown() { git_libgit2_shutdown(); }
 
 void GitLiteRepo::Clone(const wxString& url, const wxString& targetFolder)
 {
-    GitClone* cloneRequest = new GitClone(this, url, targetFolder);
-    cloneRequest->Process();
-    wxDELETE(cloneRequest);
+    GitCommandBase::Ptr_t command(new GitClone(this, url, targetFolder));
+    command->Process();
+}
+
+void GitLiteRepo::GetBranches(wxArrayString& localBranches, wxArrayString& remoteBranches)
+{
+    GitCommandBase::Ptr_t command(new GitBranch(this, GitBranch::kListBranches));
+    command->Process();
+    localBranches = command->Cast<GitBranch>()->GetLocalBranches();
+    remoteBranches = command->Cast<GitBranch>()->GetRemoteBranches();
 }

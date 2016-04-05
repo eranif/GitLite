@@ -194,7 +194,7 @@ SSHKeysDlgBase::SSHKeysDlgBase(wxWindow* parent, wxWindowID id, const wxString& 
     
     flexGridSizer45->Add(m_staticText51, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
     
-    m_filePickerPublicKey = new wxFilePickerCtrl(this, wxID_ANY, wxEmptyString, _("Select a file"), wxT("*"), wxDefaultPosition, wxSize(-1,-1), wxFLP_DEFAULT_STYLE|wxFLP_SMALL);
+    m_filePickerPublicKey = new wxFilePickerCtrl(this, wxID_ANY, wxEmptyString, _("Select a file"), wxT("*"), wxDefaultPosition, wxSize(-1,-1), wxFLP_DEFAULT_STYLE|wxFLP_USE_TEXTCTRL|wxFLP_SMALL);
     
     flexGridSizer45->Add(m_filePickerPublicKey, 0, wxALL|wxEXPAND, 5);
     

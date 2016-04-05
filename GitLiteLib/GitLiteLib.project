@@ -35,6 +35,8 @@
     <File Name="GitCredentials.cpp"/>
     <File Name="GitCommandBase.h"/>
     <File Name="GitCommandBase.cpp"/>
+    <File Name="GitBranch.h"/>
+    <File Name="GitBranch.cpp"/>
   </VirtualDirectory>
   <Settings Type="Dynamic Library">
     <GlobalSettings>

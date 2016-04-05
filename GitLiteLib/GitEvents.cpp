@@ -17,6 +17,8 @@ GitLiteEvent& GitLiteEvent::operator=(const GitLiteEvent& src)
     m_commandInt = src.m_commandInt;
     m_extraLong = src.m_extraLong;
     m_message = src.m_message;
+    m_clientData = src.m_clientData;
+    m_clientObject = src.m_clientObject;
     return *this;
 }
 
