@@ -22,14 +22,13 @@ void GitLiteRepo::Shutdown() { git_libgit2_shutdown(); }
 
 void GitLiteRepo::Clone(const wxString& url, const wxString& targetFolder)
 {
-    GitCommandBase::Ptr_t command(new GitClone(this, url, targetFolder));
+    GitCommandBase::Ptr_t command(new GitCloneCommand(this, url, targetFolder));
     command->Process();
 }
 
-void GitLiteRepo::GetBranches(wxArrayString& localBranches, wxArrayString& remoteBranches)
+void GitLiteRepo::GetBranches(GitBranch::List_t& branches)
 {
-    GitCommandBase::Ptr_t command(new GitBranch(this, GitBranch::kListBranches));
+    GitCommandBase::Ptr_t command(new GitBranchCommand(this, GitBranchCommand::kListBranches));
     command->Process();
-    localBranches = command->Cast<GitBranch>()->GetLocalBranches();
-    remoteBranches = command->Cast<GitBranch>()->GetRemoteBranches();
+    branches = command->Cast<GitBranchCommand>()->GetBranches();
 }

@@ -9,7 +9,7 @@
 typedef struct git_transfer_progress git_transfer_progress;
 typedef struct git_repository git_repository;
 
-class WXDLLIMPEXP_LIBGIT GitClone : public GitCommandBase
+class WXDLLIMPEXP_LIBGIT GitCloneCommand : public GitCommandBase
 {
     wxString m_url;
     wxString m_folder;
@@ -21,8 +21,8 @@ protected:
 
 public:
     virtual void Process();
-    GitClone(wxEvtHandler* sink, const wxString& url, const wxString& targetFolder);
-    ~GitClone();
+    GitCloneCommand(wxEvtHandler* sink, const wxString& url, const wxString& targetFolder);
+    ~GitCloneCommand();
 };
 
 #endif // GITCLONE_H

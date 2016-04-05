@@ -14,7 +14,7 @@
 // git@github.com:eranif/gitlite.git
 #define GIT_PROTOCOL "git@"
 
-GitClone::GitClone(wxEvtHandler* sink, const wxString& url, const wxString& targetFolder)
+GitCloneCommand::GitCloneCommand(wxEvtHandler* sink, const wxString& url, const wxString& targetFolder)
     : GitCommandBase(sink)
     , m_url(url)
     , m_folder(targetFolder)
@@ -32,12 +32,12 @@ GitClone::GitClone(wxEvtHandler* sink, const wxString& url, const wxString& targ
     }
 }
 
-GitClone::~GitClone() {}
+GitCloneCommand::~GitCloneCommand() {}
 
-int GitClone::FetchProgress(const git_transfer_progress* stats, void* payload)
+int GitCloneCommand::FetchProgress(const git_transfer_progress* stats, void* payload)
 {
     // Notify about the progress
-    GitClone* gitCloneObj = reinterpret_cast<GitClone*>(payload);
+    GitCloneCommand* gitCloneObj = reinterpret_cast<GitCloneCommand*>(payload);
     if(!gitCloneObj->m_startEventSent) {
         // repory start
         GitLiteCloneEvent event(wxEVT_GIT_CLONE_STARTED);
@@ -58,9 +58,9 @@ int GitClone::FetchProgress(const git_transfer_progress* stats, void* payload)
     return 0;
 }
 
-void GitClone::CheckoutProgress(const char* path, size_t completed_steps, size_t total_steps, void* payload) {}
+void GitCloneCommand::CheckoutProgress(const char* path, size_t completed_steps, size_t total_steps, void* payload) {}
 
-void GitClone::Process()
+void GitCloneCommand::Process()
 {
     // Check to see if the target folder exists
     if(wxFileName::DirExists(m_folder)) {
@@ -72,11 +72,11 @@ void GitClone::Process()
 
     git_clone_options clone_opts = GIT_CLONE_OPTIONS_INIT;
     clone_opts.checkout_opts.checkout_strategy = GIT_CHECKOUT_SAFE;
-    clone_opts.checkout_opts.progress_cb = GitClone::CheckoutProgress;
+    clone_opts.checkout_opts.progress_cb = GitCloneCommand::CheckoutProgress;
     clone_opts.checkout_opts.progress_payload = this;
     clone_opts.checkout_opts = GIT_CHECKOUT_OPTIONS_INIT;
     clone_opts.fetch_opts.callbacks.payload = this;
-    clone_opts.fetch_opts.callbacks.transfer_progress = GitClone::FetchProgress;
+    clone_opts.fetch_opts.callbacks.transfer_progress = GitCloneCommand::FetchProgress;
     clone_opts.fetch_opts.callbacks.credentials = GitCredentials::OnCredentials;
     giterr_clear();
     git_repository* repo = NULL;

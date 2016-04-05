@@ -5,6 +5,7 @@
 #include <wx/string.h>
 #include "GitLiteExports.h"
 #include "GitLiteHelperThread.h"
+#include "GitBranch.h"
 
 typedef struct git_transfer_progress git_transfer_progress;
 typedef struct git_repository git_repository;
@@ -57,10 +58,8 @@ public:
 
     /**
      * @brief return list of branches.
-     * @param branches [output] list of available branches
-     * @param selection [output] index of the current branch
      */
-    void GetBranches(wxArrayString& localBranches, wxArrayString& remoteBranches);
+    void GetBranches(GitBranch::List_t& branches);
 };
 
 #endif // WXLIBGIT_H

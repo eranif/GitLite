@@ -82,16 +82,19 @@ void MainFrame::OnCloneCompleted(GitLiteCloneEvent& event)
     m_cloneProgress = NULL;
 
     // List all branches
-    wxArrayString localBranches, remoteBranches;
-    m_repo.GetBranches(localBranches, remoteBranches);
+    wxArrayString branchesArr;
+    GitBranch::List_t branches;
+    m_repo.GetBranches(branches);
+
+    std::for_each(
+        branches.begin(), branches.end(), [&](const GitBranch& branch) { branchesArr.Add(branch.GetName()); });
 
     // Prompt the user to checkout the proper branch
     wxString branchName =
-        ::wxGetSingleChoice(_("Select Branch to checkout"), _("Checkout branch"), localBranches, 0, this);
+        ::wxGetSingleChoice(_("Select Branch to checkout"), _("Checkout branch"), branchesArr, 0, this);
     if(branchName.IsEmpty()) {
         return;
     }
-    
     // Checkout branchName
 }
 

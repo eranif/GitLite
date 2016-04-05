@@ -3,9 +3,37 @@
 
 #include "GitCommandBase.h"
 #include "GitLiteExports.h"
-#include "GitLiteRepo.h"
+#include <list>
 
-class WXDLLIMPEXP_LIBGIT GitBranch : public GitCommandBase
+class GitLiteRepo;
+class WXDLLIMPEXP_LIBGIT GitBranch
+{
+public:
+    enum eBranchType {
+        kLocal,
+        kRemote,
+    };
+
+private:
+    wxString m_name;
+    GitBranch::eBranchType m_type;
+
+public:
+    GitBranch(const wxString& name, GitBranch::eBranchType type)
+        : m_name(name)
+        , m_type(type)
+    {
+    }
+
+    void SetName(const wxString& name) { this->m_name = name; }
+    void SetType(const GitBranch::eBranchType& type) { this->m_type = type; }
+    const wxString& GetName() const { return m_name; }
+    const GitBranch::eBranchType& GetType() const { return m_type; }
+
+    typedef std::list<GitBranch> List_t;
+};
+
+class WXDLLIMPEXP_LIBGIT GitBranchCommand : public GitCommandBase
 {
 public:
     enum eBranchCommandType {
@@ -15,17 +43,14 @@ public:
 protected:
     GitLiteRepo* m_gitRepo;
     size_t m_command;
-    wxArrayString m_localBranches;
-    wxArrayString m_remoteBranches;
+    GitBranch::List_t m_branches;
 
 public:
-    GitBranch(GitLiteRepo* repo, size_t command);
-    ~GitBranch();
+    GitBranchCommand(GitLiteRepo* repo, size_t command);
+    ~GitBranchCommand();
 
     virtual void Process();
-    
-    const wxArrayString& GetLocalBranches() const { return m_localBranches; }
-    const wxArrayString& GetRemoteBranches() const { return m_remoteBranches; }
+    const GitBranch::List_t& GetBranches() const { return m_branches; }
 };
 
 #endif // GITBRANCH_H
