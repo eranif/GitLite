@@ -21,7 +21,7 @@ protected:
     virtual void OnClone(wxCommandEvent& event);
 
     // Git clone event handlers
-    void OnCloneError(GitLiteCloneEvent& event);
+    void OnCloneError(GitLiteEvent& event);
     void OnCloneStart(GitLiteCloneEvent& event);
     void OnCloneCompleted(GitLiteCloneEvent& event);
     void OnCloneProgress(GitLiteCloneEvent& event);

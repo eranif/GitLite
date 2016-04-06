@@ -21,7 +21,7 @@ protected:
 
 public:
     virtual void Process();
-    GitCloneCommand(wxEvtHandler* sink, const wxString& url, const wxString& targetFolder);
+    GitCloneCommand(GitLiteRepo* repo, const wxString& url, const wxString& targetFolder);
     ~GitCloneCommand();
 };
 

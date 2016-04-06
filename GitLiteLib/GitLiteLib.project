@@ -37,6 +37,8 @@
     <File Name="GitCommandBase.cpp"/>
     <File Name="GitBranch.h"/>
     <File Name="GitBranch.cpp"/>
+    <File Name="GitCheckoutCommand.h"/>
+    <File Name="GitCheckoutCommand.cpp"/>
   </VirtualDirectory>
   <Settings Type="Dynamic Library">
     <GlobalSettings>

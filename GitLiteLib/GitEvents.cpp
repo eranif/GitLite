@@ -1,5 +1,14 @@
 #include "GitEvents.h"
 
+wxDEFINE_EVENT(wxEVT_GIT_CRED_REQUIRED, GitLiteCredEvent);
+wxDEFINE_EVENT(wxEVT_GIT_CRED_SSH_KEYS_REQUIRED, GitLiteCredEvent);
+wxDEFINE_EVENT(wxEVT_GIT_CLONE_STARTED, GitLiteCloneEvent);
+wxDEFINE_EVENT(wxEVT_GIT_CLONE_PROGRESS, GitLiteCloneEvent);
+wxDEFINE_EVENT(wxEVT_GIT_CLONE_COMPLETED, GitLiteCloneEvent);
+wxDEFINE_EVENT(wxEVT_GIT_CLONE_ERROR, GitLiteEvent);
+wxDEFINE_EVENT(wxEVT_GIT_CHECKOUT_ERROR, GitLiteEvent);
+wxDEFINE_EVENT(wxEVT_GIT_CHECKOUT_COMPLETED, GitLiteEvent);
+
 //====================================
 // GitLiteEvent event
 //====================================
@@ -25,14 +34,6 @@ GitLiteEvent& GitLiteEvent::operator=(const GitLiteEvent& src)
 GitLiteEvent::GitLiteEvent(const GitLiteEvent& src) { *this = src; }
 
 GitLiteEvent::~GitLiteEvent() {}
-
-//====================================
-// Clone event
-//====================================
-wxDEFINE_EVENT(wxEVT_GIT_CLONE_STARTED, GitLiteCloneEvent);
-wxDEFINE_EVENT(wxEVT_GIT_CLONE_PROGRESS, GitLiteCloneEvent);
-wxDEFINE_EVENT(wxEVT_GIT_CLONE_COMPLETED, GitLiteCloneEvent);
-wxDEFINE_EVENT(wxEVT_GIT_CLONE_ERROR, GitLiteCloneEvent);
 
 GitLiteCloneEvent::GitLiteCloneEvent(wxEventType commandType, int winid)
     : GitLiteEvent(commandType, winid)
@@ -62,8 +63,6 @@ GitLiteCloneEvent::~GitLiteCloneEvent() {}
 //====================================
 // Request for credentials event
 //====================================
-wxDEFINE_EVENT(wxEVT_GIT_CRED_REQUIRED, GitLiteCredEvent);
-wxDEFINE_EVENT(wxEVT_GIT_CRED_SSH_KEYS_REQUIRED, GitLiteCredEvent);
 GitLiteCredEvent::GitLiteCredEvent(wxEventType commandType, int winid)
     : GitLiteEvent(commandType, winid)
     , m_cancelled(false)

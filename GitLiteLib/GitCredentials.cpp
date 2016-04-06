@@ -3,6 +3,7 @@
 #include <git2/errors.h>
 #include <git2/transport.h>
 #include "GitCommandBase.h"
+#include "GitLiteRepo.h"
 
 #define __C(s) s.mb_str(wxConvUTF8).data()
 
@@ -19,7 +20,7 @@ int GitCredentials::OnCredentials(
         GitLiteCredEvent event(wxEVT_GIT_CRED_REQUIRED);
         event.SetUser(username_from_url);
         GitCommandBase* gitCloneObj = reinterpret_cast<GitCommandBase*>(payload);
-        gitCloneObj->GetSink()->ProcessEvent(event);
+        gitCloneObj->GetRepo()->ProcessEvent(event);
         if(event.IsCancelled()) {
             return GIT_EUSER;
         }
@@ -29,7 +30,7 @@ int GitCredentials::OnCredentials(
         GitLiteCredEvent event(wxEVT_GIT_CRED_SSH_KEYS_REQUIRED);
         event.SetUser(username_from_url);
         GitCommandBase* gitCloneObj = reinterpret_cast<GitCommandBase*>(payload);
-        gitCloneObj->GetSink()->ProcessEvent(event);
+        gitCloneObj->GetRepo()->ProcessEvent(event);
         if(event.IsCancelled()) {
             return GIT_EUSER;
         }

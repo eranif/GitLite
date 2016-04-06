@@ -5,17 +5,18 @@
 #include "GitLiteExports.h"
 #include <wx/sharedptr.h>
 
+class GitLiteRepo;
 class WXDLLIMPEXP_LIBGIT GitCommandBase
 {
-    wxEvtHandler* m_sink;
-
+    GitLiteRepo* m_repo;
+    
 public:
     typedef wxSharedPtr<GitCommandBase> Ptr_t;
 
 public:
-    GitCommandBase(wxEvtHandler* sink);
+    GitCommandBase(GitLiteRepo* sink);
     virtual ~GitCommandBase();
-    wxEvtHandler* GetSink() { return m_sink; }
+    GitLiteRepo* GetRepo() { return m_repo; }
     
     /**
      * @brief cast the base to its concrete type

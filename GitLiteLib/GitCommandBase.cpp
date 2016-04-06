@@ -1,7 +1,7 @@
 #include "GitCommandBase.h"
 
-GitCommandBase::GitCommandBase(wxEvtHandler* sink)
-    : m_sink(sink)
+GitCommandBase::GitCommandBase(GitLiteRepo* repo)
+    : m_repo(repo)
 {
 }
 

@@ -65,7 +65,7 @@ void MainFrame::OnClone(wxCommandEvent& event)
     }
 }
 
-void MainFrame::OnCloneError(GitLiteCloneEvent& event)
+void MainFrame::OnCloneError(GitLiteEvent& event)
 {
     ::wxMessageBox(event.GetMessage(), "GitLite", wxICON_ERROR | wxCENTER);
     if(m_cloneProgress) {
@@ -98,7 +98,9 @@ void MainFrame::OnCloneCompleted(GitLiteCloneEvent& event)
     if(branchName.IsEmpty()) {
         return;
     }
+    
     // Checkout branchName
+    m_repo.Checkout(branchName);
 }
 
 void MainFrame::OnCloneProgress(GitLiteCloneEvent& event)

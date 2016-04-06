@@ -1,4 +1,5 @@
 #include "GitClone.h"
+#include "GitLiteRepo.h"
 #include <wx/filename.h>
 #include "GitEvents.h"
 #include "GitErrors.h"
@@ -14,8 +15,8 @@
 // git@github.com:eranif/gitlite.git
 #define GIT_PROTOCOL "git@"
 
-GitCloneCommand::GitCloneCommand(wxEvtHandler* sink, const wxString& url, const wxString& targetFolder)
-    : GitCommandBase(sink)
+GitCloneCommand::GitCloneCommand(GitLiteRepo* repo, const wxString& url, const wxString& targetFolder)
+    : GitCommandBase(repo)
     , m_url(url)
     , m_folder(targetFolder)
     , m_startEventSent(false)
@@ -28,7 +29,7 @@ GitCloneCommand::GitCloneCommand(wxEvtHandler* sink, const wxString& url, const 
         wxString path = uri.GetPath();
         wxString user = uri.GetUser();
         m_url.Clear();
-        m_url << "ssh://" << user << "@" << host << "/" << path; 
+        m_url << "ssh://" << user << "@" << host << "/" << path;
     }
 }
 
@@ -43,14 +44,14 @@ int GitCloneCommand::FetchProgress(const git_transfer_progress* stats, void* pay
         GitLiteCloneEvent event(wxEVT_GIT_CLONE_STARTED);
         event.SetUrl(gitCloneObj->m_url);
         event.SetPath(gitCloneObj->m_folder);
-        gitCloneObj->GetSink()->ProcessEvent(event);
+        gitCloneObj->GetRepo()->ProcessEvent(event);
         gitCloneObj->m_startEventSent = true;
     }
 
     GitLiteCloneEvent event(wxEVT_GIT_CLONE_PROGRESS);
     event.SetTotal(stats->total_objects);
     event.SetCurrent(stats->indexed_objects);
-    gitCloneObj->GetSink()->ProcessEvent(event);
+    gitCloneObj->GetRepo()->ProcessEvent(event);
     if(event.IsCancelled()) {
         return kGitCloneCancelled;
     }
@@ -64,9 +65,9 @@ void GitCloneCommand::Process()
 {
     // Check to see if the target folder exists
     if(wxFileName::DirExists(m_folder)) {
-        GitLiteCloneEvent event(wxEVT_GIT_CLONE_ERROR);
+        GitLiteEvent event(wxEVT_GIT_CLONE_ERROR);
         event.SetMessage(_("Git error: target directory already exists"));
-        GetSink()->AddPendingEvent(event);
+        GetRepo()->AddPendingEvent(event);
         return;
     }
 
@@ -90,12 +91,12 @@ void GitCloneCommand::Process()
         } else {
             errmsg << _("Git clone error:(") << giterr_last()->klass << "): " << giterr_last()->message;
         }
-        GitLiteCloneEvent event(wxEVT_GIT_CLONE_ERROR);
+        GitLiteEvent event(wxEVT_GIT_CLONE_ERROR);
         event.SetMessage(errmsg);
-        GetSink()->AddPendingEvent(event);
+        GetRepo()->AddPendingEvent(event);
     } else {
         GitLiteCloneEvent event(wxEVT_GIT_CLONE_COMPLETED);
         event.SetClientData(repo); // Send back the repository to the main thread
-        GetSink()->AddPendingEvent(event);
+        GetRepo()->AddPendingEvent(event);
     }
 }
