@@ -86,8 +86,11 @@ void MainFrame::OnCloneCompleted(GitLiteCloneEvent& event)
     GitBranch::List_t branches;
     m_repo.GetBranches(branches);
 
-    std::for_each(
-        branches.begin(), branches.end(), [&](const GitBranch& branch) { branchesArr.Add(branch.GetName()); });
+    std::for_each(branches.begin(), branches.end(), [&](const GitBranch& branch) {
+        if(branch.IsLocal()) {
+            branchesArr.Add(branch.GetName());
+        }
+    });
 
     // Prompt the user to checkout the proper branch
     wxString branchName =
@@ -161,10 +164,8 @@ void MainFrame::OnGitSshKeysCredentials(GitLiteCredEvent& event)
     dlg.GetFilePickerPublicKey()->SetPath(publicKey);
     if(dlg.ShowModal() == wxID_OK) {
         // Store the values
-        conf.AddSshKeys(dlg.GetFilePickerPublicKey()->GetPath(),
-                        dlg.GetFilePickerPrivateKey()->GetPath(),
-                        dlg.GetTextCtrlRemoteUsername()->GetValue(),
-                        dlg.GetTextCtrlPasphrase()->GetValue());
+        conf.AddSshKeys(dlg.GetFilePickerPublicKey()->GetPath(), dlg.GetFilePickerPrivateKey()->GetPath(),
+            dlg.GetTextCtrlRemoteUsername()->GetValue(), dlg.GetTextCtrlPasphrase()->GetValue());
         conf.Save();
         // Return the values to the user
         event.SetUser(dlg.GetTextCtrlRemoteUsername()->GetValue());
