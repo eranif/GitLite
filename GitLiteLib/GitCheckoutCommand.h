@@ -19,7 +19,7 @@ public:
     ~GitCheckoutCommand();
 
 public:
-    virtual void Process();
+    virtual void Process(wxThread* thread = nullptr);
     
 };
 

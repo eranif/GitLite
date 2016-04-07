@@ -5,25 +5,12 @@
 #include "GitLiteExports.h"
 #include <wx/msgqueue.h>
 #include <wx/event.h>
+#include "GitCommandBase.h"
 
 class GitLiteHelperThread;
-class WXDLLIMPEXP_LIBGIT GitLiteThreadRequest
-{
-    wxEvtHandler* m_sink;
-
-public:
-    wxEvtHandler* GetSink() { return m_sink; }
-    GitLiteThreadRequest(wxEvtHandler* sink)
-        : m_sink(sink)
-    {
-    }
-    virtual ~GitLiteThreadRequest() {}
-    virtual void Process(GitLiteHelperThread* thread) = 0;
-};
-
 class WXDLLIMPEXP_LIBGIT GitLiteHelperThread : public wxThread
 {
-    wxMessageQueue<GitLiteThreadRequest*> m_queue;
+    wxMessageQueue<GitCommandBase*> m_queue;
     bool m_cancel;
 
 public:
@@ -36,7 +23,7 @@ public:
      * Add a request to the worker thread
      * @param request request to execute.
      */
-    void Add(GitLiteThreadRequest* request);
+    void Add(GitCommandBase* request);
 
     /**
      * Stops the thread

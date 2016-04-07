@@ -23,8 +23,7 @@ void GitLiteRepo::Shutdown() { git_libgit2_shutdown(); }
 
 void GitLiteRepo::Clone(const wxString& url, const wxString& targetFolder)
 {
-    GitCommandBase::Ptr_t command(new GitCloneCommand(this, url, targetFolder));
-    command->Process();
+    m_thread.Add(new GitCloneCommand(this, url, targetFolder));
 }
 
 void GitLiteRepo::GetBranches(GitBranch::List_t& branches)

@@ -5,6 +5,7 @@
 #include "GitLiteExports.h"
 #include <wx/sharedptr.h>
 
+class wxThread;
 class GitLiteRepo;
 class WXDLLIMPEXP_LIBGIT GitCommandBase
 {
@@ -26,7 +27,7 @@ public:
     /**
      * @brief execute the command
      */
-    virtual void Process() = 0;
+    virtual void Process(wxThread* thread = nullptr) = 0;
 };
 
 #endif // GITCOMMANDBASE_H

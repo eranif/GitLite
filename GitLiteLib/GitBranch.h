@@ -55,7 +55,7 @@ public:
     GitBranchCommand(GitLiteRepo* repo, size_t command);
     ~GitBranchCommand();
 
-    virtual void Process();
+    virtual void Process(wxThread* thread = nullptr);
     const GitBranch::List_t& GetBranches() const { return m_branches; }
 };
 

@@ -10,19 +10,6 @@
 typedef struct git_transfer_progress git_transfer_progress;
 typedef struct git_repository git_repository;
 
-class WXDLLIMPEXP_LIBGIT GitLiteException
-{
-    wxString m_what;
-
-public:
-    GitLiteException(const wxString& what)
-        : m_what(what)
-    {
-    }
-    virtual ~GitLiteException() {}
-    const wxString& What() const { return m_what; }
-};
-
 class WXDLLIMPEXP_LIBGIT GitLiteRepo : public wxEvtHandler
 {
     git_repository* m_repo;

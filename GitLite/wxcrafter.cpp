@@ -328,3 +328,99 @@ GitCloneDialogBase::GitCloneDialogBase(wxWindow* parent, wxWindowID id, const wx
 GitCloneDialogBase::~GitCloneDialogBase()
 {
 }
+
+GitCloneProgressBaseDlg::GitCloneProgressBaseDlg(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+    : wxDialog(parent, id, title, pos, size, style)
+{
+    if ( !bBitmapLoaded ) {
+        // We need to initialise the default bitmap handler
+        wxXmlResource::Get()->AddHandler(new wxBitmapXmlHandler);
+        wxC9ED9InitBitmapResources();
+        bBitmapLoaded = true;
+    }
+    
+    wxBoxSizer* boxSizer89 = new wxBoxSizer(wxVERTICAL);
+    this->SetSizer(boxSizer89);
+    
+    wxFlexGridSizer* flexGridSizer91 = new wxFlexGridSizer(0, 3, 0, 0);
+    flexGridSizer91->SetFlexibleDirection( wxBOTH );
+    flexGridSizer91->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+    flexGridSizer91->AddGrowableCol(1);
+    
+    boxSizer89->Add(flexGridSizer91, 1, wxALL|wxEXPAND, 5);
+    
+    m_staticText99 = new wxStaticText(this, wxID_ANY, _("Objects Received:"), wxDefaultPosition, wxSize(-1,-1), 0);
+    
+    flexGridSizer91->Add(m_staticText99, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
+    
+    m_gaugeObjRecv = new wxGauge(this, wxID_ANY, 100, wxDefaultPosition, wxSize(-1,-1), wxGA_HORIZONTAL);
+    m_gaugeObjRecv->SetValue(10);
+    
+    flexGridSizer91->Add(m_gaugeObjRecv, 0, wxALL|wxEXPAND, 5);
+    
+    m_staticTextRecvObjects = new wxStaticText(this, wxID_ANY, wxT(""), wxDefaultPosition, wxSize(100,-1), 0);
+    
+    flexGridSizer91->Add(m_staticTextRecvObjects, 0, wxALL|wxEXPAND|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
+    
+    m_staticText103 = new wxStaticText(this, wxID_ANY, _("Objects Indexed:"), wxDefaultPosition, wxSize(-1,-1), 0);
+    
+    flexGridSizer91->Add(m_staticText103, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
+    
+    m_gaugeObjIndexed = new wxGauge(this, wxID_ANY, 100, wxDefaultPosition, wxSize(-1,-1), wxGA_HORIZONTAL);
+    m_gaugeObjIndexed->SetValue(10);
+    
+    flexGridSizer91->Add(m_gaugeObjIndexed, 0, wxALL|wxEXPAND, 5);
+    
+    m_staticTextIndexedObjects = new wxStaticText(this, wxID_ANY, wxT(""), wxDefaultPosition, wxSize(100,-1), 0);
+    
+    flexGridSizer91->Add(m_staticTextIndexedObjects, 0, wxALL|wxEXPAND|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
+    
+    m_staticText107 = new wxStaticText(this, wxID_ANY, _("Deltas Indexed:"), wxDefaultPosition, wxSize(-1,-1), 0);
+    
+    flexGridSizer91->Add(m_staticText107, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
+    
+    m_gaugeDeltasIndexed = new wxGauge(this, wxID_ANY, 100, wxDefaultPosition, wxSize(-1,-1), wxGA_HORIZONTAL);
+    m_gaugeDeltasIndexed->SetValue(10);
+    
+    flexGridSizer91->Add(m_gaugeDeltasIndexed, 0, wxALL|wxEXPAND, 5);
+    
+    m_staticTextIndexedDeltas = new wxStaticText(this, wxID_ANY, wxT(""), wxDefaultPosition, wxSize(100,-1), 0);
+    
+    flexGridSizer91->Add(m_staticTextIndexedDeltas, 0, wxALL|wxEXPAND|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
+    
+    m_stdBtnSizer93 = new wxStdDialogButtonSizer();
+    
+    boxSizer89->Add(m_stdBtnSizer93, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 10);
+    
+    m_button95 = new wxButton(this, wxID_CANCEL, wxT(""), wxDefaultPosition, wxSize(-1, -1), 0);
+    m_button95->SetDefault();
+    m_stdBtnSizer93->AddButton(m_button95);
+    m_stdBtnSizer93->Realize();
+    
+    SetName(wxT("GitCloneProgressBaseDlg"));
+    SetSize(-1,-1);
+    if (GetSizer()) {
+         GetSizer()->Fit(this);
+    }
+    if(GetParent()) {
+        CentreOnParent(wxBOTH);
+    } else {
+        CentreOnScreen(wxBOTH);
+    }
+#if wxVERSION_NUMBER >= 2900
+    if(!wxPersistenceManager::Get().Find(this)) {
+        wxPersistenceManager::Get().RegisterAndRestore(this);
+    } else {
+        wxPersistenceManager::Get().Restore(this);
+    }
+#endif
+    // Connect events
+    m_button95->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(GitCloneProgressBaseDlg::OnCancel), NULL, this);
+    
+}
+
+GitCloneProgressBaseDlg::~GitCloneProgressBaseDlg()
+{
+    m_button95->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(GitCloneProgressBaseDlg::OnCancel), NULL, this);
+    
+}

@@ -13,8 +13,9 @@ GitBranchCommand::GitBranchCommand(GitLiteRepo* repo, size_t commandType)
 
 GitBranchCommand::~GitBranchCommand() {}
 
-void GitBranchCommand::Process()
+void GitBranchCommand::Process(wxThread* thread)
 {
+    wxUnusedVar(thread);
     if(m_command & kListBranches) {
         m_branches.clear();
         git_branch_iterator* iter = NULL;

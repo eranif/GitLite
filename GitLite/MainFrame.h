@@ -5,10 +5,11 @@
 #include "GitEvents.h"
 #include <wx/progdlg.h>
 
+class GitCloneProgressDlg;
 class MainFrame : public MainFrameBaseClass
 {
     GitLiteRepo m_repo;
-    wxProgressDialog* m_cloneProgress;
+    GitCloneProgressDlg* m_cloneProgress;
 
 public:
     MainFrame(wxWindow* parent);

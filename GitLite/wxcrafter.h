@@ -22,6 +22,7 @@
 #include <wx/textctrl.h>
 #include <wx/button.h>
 #include <wx/filepicker.h>
+#include <wx/gauge.h>
 #if wxVERSION_NUMBER >= 2900
 #include <wx/persist.h>
 #include <wx/persist/toplevel.h>
@@ -132,6 +133,39 @@ public:
     wxDirPickerCtrl* GetDirPicker() { return m_dirPicker; }
     GitCloneDialogBase(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Git Clone"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(-1,-1), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
     virtual ~GitCloneDialogBase();
+};
+
+
+class GitCloneProgressBaseDlg : public wxDialog
+{
+protected:
+    wxStaticText* m_staticText99;
+    wxGauge* m_gaugeObjRecv;
+    wxStaticText* m_staticTextRecvObjects;
+    wxStaticText* m_staticText103;
+    wxGauge* m_gaugeObjIndexed;
+    wxStaticText* m_staticTextIndexedObjects;
+    wxStaticText* m_staticText107;
+    wxGauge* m_gaugeDeltasIndexed;
+    wxStaticText* m_staticTextIndexedDeltas;
+    wxStdDialogButtonSizer* m_stdBtnSizer93;
+    wxButton* m_button95;
+
+protected:
+    virtual void OnCancel(wxCommandEvent& event) { event.Skip(); }
+
+public:
+    wxStaticText* GetStaticText99() { return m_staticText99; }
+    wxGauge* GetGaugeObjRecv() { return m_gaugeObjRecv; }
+    wxStaticText* GetStaticTextRecvObjects() { return m_staticTextRecvObjects; }
+    wxStaticText* GetStaticText103() { return m_staticText103; }
+    wxGauge* GetGaugeObjIndexed() { return m_gaugeObjIndexed; }
+    wxStaticText* GetStaticTextIndexedObjects() { return m_staticTextIndexedObjects; }
+    wxStaticText* GetStaticText107() { return m_staticText107; }
+    wxGauge* GetGaugeDeltasIndexed() { return m_gaugeDeltasIndexed; }
+    wxStaticText* GetStaticTextIndexedDeltas() { return m_staticTextIndexedDeltas; }
+    GitCloneProgressBaseDlg(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Clone Progress"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(-1,-1), long style = wxDEFAULT_DIALOG_STYLE);
+    virtual ~GitCloneProgressBaseDlg();
 };
 
 #endif

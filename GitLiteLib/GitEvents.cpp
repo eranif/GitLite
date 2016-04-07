@@ -37,20 +37,22 @@ GitLiteEvent::~GitLiteEvent() {}
 
 GitLiteCloneEvent::GitLiteCloneEvent(wxEventType commandType, int winid)
     : GitLiteEvent(commandType, winid)
-    , m_total(100)
-    , m_current(0)
-    , m_cancelled(false)
-    , m_error(false)
+    , m_totalObjects(0)
+    , m_totalDeltas(0)
+    , m_receivedObjects(0)
+    , m_indexedObjects(0)
+    , m_indexedDeltas(0)
 {
 }
 
 GitLiteCloneEvent& GitLiteCloneEvent::operator=(const GitLiteCloneEvent& src)
 {
     GitLiteEvent::operator=(src);
-    m_total = src.m_total;
-    m_cancelled = src.m_cancelled;
-    m_current = src.m_current;
-    m_error = src.m_error;
+    m_totalObjects = src.m_totalObjects;
+    m_totalDeltas = src.m_totalDeltas;
+    m_receivedObjects = src.m_receivedObjects;
+    m_indexedObjects = src.m_indexedObjects;
+    m_indexedDeltas = src.m_indexedDeltas;
     m_path = src.m_path;
     m_url = src.m_url;
     return *this;

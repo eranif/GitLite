@@ -34,10 +34,11 @@ typedef void (wxEvtHandler::*GitLiteEventFunction)(GitLiteEvent&);
 class WXDLLIMPEXP_LIBGIT GitLiteCloneEvent : public GitLiteEvent
 {
 protected:
-    int m_total;
-    int m_current;
-    bool m_cancelled;
-    bool m_error;
+    int m_totalObjects;
+    int m_totalDeltas;
+    int m_receivedObjects;
+    int m_indexedObjects;
+    int m_indexedDeltas;
     wxString m_url;
     wxString m_path;
 
@@ -47,18 +48,19 @@ public:
     GitLiteCloneEvent& operator=(const GitLiteCloneEvent& src);
     virtual ~GitLiteCloneEvent();
     virtual wxEvent* Clone() const { return new GitLiteCloneEvent(*this); }
-    void SetCancelled(bool cancelled) { this->m_cancelled = cancelled; }
-    void SetCurrent(int current) { this->m_current = current; }
-    void SetTotal(int total) { this->m_total = total; }
-    bool IsCancelled() const { return m_cancelled; }
-    int GetCurrent() const { return m_current; }
-    int GetTotal() const { return m_total; }
-    bool IsDone() const { return m_total == m_current; }
-    void SetError(bool error) { this->m_error = error; }
-    bool IsError() const { return m_error; }
+    void SetIndexedDeltas(int indexedDeltas) { this->m_indexedDeltas = indexedDeltas; }
+    void SetIndexedObjects(int indexedObjects) { this->m_indexedObjects = indexedObjects; }
     void SetPath(const wxString& path) { this->m_path = path; }
+    void SetReceivedObjects(int receivedObjects) { this->m_receivedObjects = receivedObjects; }
+    void SetTotalDeltas(int totalDeltas) { this->m_totalDeltas = totalDeltas; }
+    void SetTotalObjects(int totalObjects) { this->m_totalObjects = totalObjects; }
     void SetUrl(const wxString& url) { this->m_url = url; }
+    int GetIndexedDeltas() const { return m_indexedDeltas; }
+    int GetIndexedObjects() const { return m_indexedObjects; }
     const wxString& GetPath() const { return m_path; }
+    int GetReceivedObjects() const { return m_receivedObjects; }
+    int GetTotalDeltas() const { return m_totalDeltas; }
+    int GetTotalObjects() const { return m_totalObjects; }
     const wxString& GetUrl() const { return m_url; }
 };
 

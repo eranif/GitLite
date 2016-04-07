@@ -44,24 +44,31 @@ int GitCloneCommand::FetchProgress(const git_transfer_progress* stats, void* pay
         GitLiteCloneEvent event(wxEVT_GIT_CLONE_STARTED);
         event.SetUrl(gitCloneObj->m_url);
         event.SetPath(gitCloneObj->m_folder);
-        gitCloneObj->GetRepo()->ProcessEvent(event);
+        gitCloneObj->GetRepo()->AddPendingEvent(event);
         gitCloneObj->m_startEventSent = true;
     }
 
-    GitLiteCloneEvent event(wxEVT_GIT_CLONE_PROGRESS);
-    event.SetTotal(stats->total_objects);
-    event.SetCurrent(stats->indexed_objects);
-    gitCloneObj->GetRepo()->ProcessEvent(event);
-    if(event.IsCancelled()) {
+    {
+        GitLiteCloneEvent event(wxEVT_GIT_CLONE_PROGRESS);
+        event.SetUrl(gitCloneObj->m_url);
+        event.SetPath(gitCloneObj->m_folder);
+        event.SetIndexedDeltas(stats->indexed_deltas);
+        event.SetIndexedObjects(stats->indexed_objects);
+        event.SetTotalDeltas(stats->total_deltas);
+        event.SetTotalObjects(stats->total_objects);
+        event.SetReceivedObjects(stats->received_objects);
+        gitCloneObj->GetRepo()->AddPendingEvent(event);
+    }
+    
+    if(gitCloneObj->m_thread->IsCancel()) {
         return kGitCloneCancelled;
     }
-
     return 0;
 }
 
 void GitCloneCommand::CheckoutProgress(const char* path, size_t completed_steps, size_t total_steps, void* payload) {}
 
-void GitCloneCommand::Process()
+void GitCloneCommand::Process(wxThread* thread)
 {
     // Check to see if the target folder exists
     if(wxFileName::DirExists(m_folder)) {
@@ -70,7 +77,9 @@ void GitCloneCommand::Process()
         GetRepo()->AddPendingEvent(event);
         return;
     }
-
+    
+    m_thread = dynamic_cast<GitLiteHelperThread*>(thread);
+    
     git_clone_options clone_opts = GIT_CLONE_OPTIONS_INIT;
     clone_opts.checkout_opts.checkout_strategy = GIT_CHECKOUT_SAFE;
     clone_opts.checkout_opts.progress_cb = GitCloneCommand::CheckoutProgress;

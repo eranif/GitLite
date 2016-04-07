@@ -199,6 +199,8 @@
     <File Name="SSHKeysDlg.cpp"/>
     <File Name="GitCloneDialog.h"/>
     <File Name="GitCloneDialog.cpp"/>
+    <File Name="GitCloneProgressDlg.h"/>
+    <File Name="GitCloneProgressDlg.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="wxSimpleJSON">
     <File Name="cJSON.c"/>

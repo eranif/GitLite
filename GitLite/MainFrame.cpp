@@ -7,6 +7,7 @@
 #include "GitConfig.h"
 #include "GitCloneDialog.h"
 #include <wx/choicdlg.h>
+#include "GitCloneProgressDlg.h"
 
 MainFrame::MainFrame(wxWindow* parent)
     : MainFrameBaseClass(parent)
@@ -98,27 +99,15 @@ void MainFrame::OnCloneCompleted(GitLiteCloneEvent& event)
     if(branchName.IsEmpty()) {
         return;
     }
-    
+
     // Checkout branchName
     m_repo.Checkout(branchName);
 }
 
 void MainFrame::OnCloneProgress(GitLiteCloneEvent& event)
 {
-    // report progress
-    double total = event.GetTotal();
-    double current = event.GetCurrent();
-    double progress = ((current / total) * 100.0);
     if(m_cloneProgress) {
-        // Important note about Update()
-        // this functions call wxYield, this means
-        // that another event might be processed (e.g. wxEVT_GIT_CLONE_COMPLETED which destroys m_cloneProgress)
-        // so we need to check for m_cloneProgress again after the call to Update()
-        m_cloneProgress->Update(progress);
-        if(m_cloneProgress && m_cloneProgress->WasCancelled()) {
-            // The clone was cancelled - notify the worker thread
-            m_repo.GetHelperThread().SetCancel(true);
-        }
+        m_cloneProgress->Update(event);
     }
 }
 
@@ -126,9 +115,8 @@ void MainFrame::OnCloneStart(GitLiteCloneEvent& event)
 {
     wxString message;
     message << _("Cloning repository: ") << event.GetUrl();
-    m_cloneProgress =
-        new wxProgressDialog(_("Git Clone"), message, 100, this, wxPD_CAN_ABORT | wxPD_ELAPSED_TIME | wxPD_AUTO_HIDE);
-    m_cloneProgress->Show();
+    m_cloneProgress = new GitCloneProgressDlg(this, &m_repo);
+    m_cloneProgress->ShowModal();
 }
 
 void MainFrame::OnGitCredentials(GitLiteCredEvent& event)

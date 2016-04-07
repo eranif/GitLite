@@ -11,8 +11,9 @@ GitCheckoutCommand::GitCheckoutCommand(GitLiteRepo* repo, const wxString& branch
 
 GitCheckoutCommand::~GitCheckoutCommand() {}
 
-void GitCheckoutCommand::Process()
+void GitCheckoutCommand::Process(wxThread* thread)
 {
+    wxUnusedVar(thread);
     git_object* treeish = NULL;
     git_checkout_options opts;
     git_checkout_init_options(&opts, GIT_CHECKOUT_OPTIONS_VERSION);
