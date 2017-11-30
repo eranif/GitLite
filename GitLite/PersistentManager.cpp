@@ -9,7 +9,7 @@ PersistentManager::PersistentManager()
     m_config = new wxFileConfig("", "", persistentStorage.GetFullPath());
 }
 
-PersistentManager::~PersistentManager() 
+PersistentManager::~PersistentManager()
 {
     m_config->Flush();
     wxDELETE(m_config);

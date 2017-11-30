@@ -47,7 +47,7 @@ public:
      * @brief return list of branches.
      */
     void GetBranches(GitBranch::List_t& branches);
-    
+
     /**
      * @brief checkout branch
      */

@@ -5,7 +5,4 @@ GitCloneDialog::GitCloneDialog(wxWindow* parent)
 {
 }
 
-GitCloneDialog::~GitCloneDialog()
-{
-}
-
+GitCloneDialog::~GitCloneDialog() {}

@@ -5,7 +5,4 @@ GitCommandBase::GitCommandBase(GitLiteRepo* repo)
 {
 }
 
-GitCommandBase::~GitCommandBase()
-{
-}
-
+GitCommandBase::~GitCommandBase() {}

@@ -21,13 +21,13 @@ private:
 
 public:
     typedef std::list<GitBranch> List_t;
-    
+
     GitBranch(const wxString& name, GitBranch::eBranchType type)
         : m_name(name)
         , m_type(type)
     {
     }
-    
+
     // Accessors
     void SetName(const wxString& name) { this->m_name = name; }
     void SetType(const GitBranch::eBranchType& type) { this->m_type = type; }

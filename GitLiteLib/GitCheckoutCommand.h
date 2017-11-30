@@ -20,7 +20,6 @@ public:
 
 public:
     virtual void Process(wxThread* thread = nullptr);
-    
 };
 
 #endif // GITCHECKOUTCOMMAND_H

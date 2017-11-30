@@ -5,7 +5,4 @@ UserNamePasswordDlg::UserNamePasswordDlg(wxWindow* parent)
 {
 }
 
-UserNamePasswordDlg::~UserNamePasswordDlg()
-{
-}
-
+UserNamePasswordDlg::~UserNamePasswordDlg() {}

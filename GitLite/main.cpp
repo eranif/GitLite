@@ -8,6 +8,7 @@
 class MainApp : public wxApp
 {
     PersistentManager m_persistentManager;
+
 public:
     MainApp() { GitLiteRepo::Initialize(); }
     virtual ~MainApp() { GitLiteRepo::Shutdown(); }
@@ -15,7 +16,7 @@ public:
     virtual bool OnInit()
     {
         wxPersistenceManager::Get().Set(m_persistentManager);
-        
+
         // Add the common image handlers
         wxImage::AddHandler(new wxPNGHandler);
         wxImage::AddHandler(new wxJPEGHandler);

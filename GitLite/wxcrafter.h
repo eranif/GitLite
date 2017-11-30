@@ -36,6 +36,7 @@ public:
     enum {
         TB_ID_COPY = 10001,
     };
+
 protected:
     wxPanel* m_mainPanel;
     wxMenuBar* m_menuBar;
@@ -54,10 +55,11 @@ public:
     wxPanel* GetMainPanel() { return m_mainPanel; }
     wxMenuBar* GetMenuBar() { return m_menuBar; }
     wxToolBar* GetMainToolbar() { return m_mainToolbar; }
-    MainFrameBaseClass(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("My Frame"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(-1,-1), long style = wxCAPTION|wxRESIZE_BORDER|wxMAXIMIZE_BOX|wxMINIMIZE_BOX|wxSYSTEM_MENU|wxCLOSE_BOX);
+    MainFrameBaseClass(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("My Frame"),
+        const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(-1, -1),
+        long style = wxCAPTION | wxRESIZE_BORDER | wxMAXIMIZE_BOX | wxMINIMIZE_BOX | wxSYSTEM_MENU | wxCLOSE_BOX);
     virtual ~MainFrameBaseClass();
 };
-
 
 class UserNamePasswordDlgBase : public wxDialog
 {
@@ -71,16 +73,16 @@ protected:
     wxButton* m_button21;
 
 protected:
-
 public:
     wxStaticText* GetStaticText25() { return m_staticText25; }
     wxTextCtrl* GetTextCtrlUsername() { return m_textCtrlUsername; }
     wxStaticText* GetStaticText29() { return m_staticText29; }
     wxTextCtrl* GetTextCtrlPassword() { return m_textCtrlPassword; }
-    UserNamePasswordDlgBase(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Username/Password"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(-1,-1), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+    UserNamePasswordDlgBase(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Username/Password"),
+        const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(-1, -1),
+        long style = wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
     virtual ~UserNamePasswordDlgBase();
 };
-
 
 class SSHKeysDlgBase : public wxDialog
 {
@@ -98,7 +100,6 @@ protected:
     wxButton* m_button43;
 
 protected:
-
 public:
     wxStaticText* GetStaticText47() { return m_staticText47; }
     wxFilePickerCtrl* GetFilePickerPrivateKey() { return m_filePickerPrivateKey; }
@@ -108,10 +109,11 @@ public:
     wxTextCtrl* GetTextCtrlPasphrase() { return m_textCtrlPasphrase; }
     wxStaticText* GetStaticText59() { return m_staticText59; }
     wxTextCtrl* GetTextCtrlRemoteUsername() { return m_textCtrlRemoteUsername; }
-    SSHKeysDlgBase(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("SSH Keys"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(-1,-1), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+    SSHKeysDlgBase(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("SSH Keys"),
+        const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(-1, -1),
+        long style = wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
     virtual ~SSHKeysDlgBase();
 };
-
 
 class GitCloneDialogBase : public wxDialog
 {
@@ -125,16 +127,16 @@ protected:
     wxButton* m_button73;
 
 protected:
-
 public:
     wxStaticText* GetStaticText77() { return m_staticText77; }
     wxTextCtrl* GetTextCtrlURL() { return m_textCtrlURL; }
     wxStaticText* GetStaticText81() { return m_staticText81; }
     wxDirPickerCtrl* GetDirPicker() { return m_dirPicker; }
-    GitCloneDialogBase(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Git Clone"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(-1,-1), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+    GitCloneDialogBase(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Git Clone"),
+        const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(-1, -1),
+        long style = wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
     virtual ~GitCloneDialogBase();
 };
-
 
 class GitCloneProgressBaseDlg : public wxDialog
 {
@@ -164,7 +166,9 @@ public:
     wxStaticText* GetStaticText107() { return m_staticText107; }
     wxGauge* GetGaugeDeltasIndexed() { return m_gaugeDeltasIndexed; }
     wxStaticText* GetStaticTextIndexedDeltas() { return m_staticTextIndexedDeltas; }
-    GitCloneProgressBaseDlg(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Clone Progress"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(-1,-1), long style = wxDEFAULT_DIALOG_STYLE);
+    GitCloneProgressBaseDlg(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Clone Progress"),
+        const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(-1, -1),
+        long style = wxDEFAULT_DIALOG_STYLE);
     virtual ~GitCloneProgressBaseDlg();
 };
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CodeLite_Workspace Name="GitLite" Database="">
+<CodeLite_Workspace Name="GitLite" Database="" Version="10.0.0">
   <Project Name="GitLite" Path="GitLite/GitLite.project" Active="Yes"/>
   <Project Name="GitLiteLib" Path="GitLiteLib/GitLiteLib.project" Active="No"/>
   <BuildMatrix>

@@ -59,7 +59,7 @@ int GitCloneCommand::FetchProgress(const git_transfer_progress* stats, void* pay
         event.SetReceivedObjects(stats->received_objects);
         gitCloneObj->GetRepo()->AddPendingEvent(event);
     }
-    
+
     if(gitCloneObj->m_thread->IsCancel()) {
         return kGitCloneCancelled;
     }
@@ -77,9 +77,9 @@ void GitCloneCommand::Process(wxThread* thread)
         GetRepo()->AddPendingEvent(event);
         return;
     }
-    
+
     m_thread = dynamic_cast<GitLiteHelperThread*>(thread);
-    
+
     git_clone_options clone_opts = GIT_CLONE_OPTIONS_INIT;
     clone_opts.checkout_opts.checkout_strategy = GIT_CHECKOUT_SAFE;
     clone_opts.checkout_opts.progress_cb = GitCloneCommand::CheckoutProgress;

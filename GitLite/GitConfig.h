@@ -30,13 +30,13 @@ public:
      * @brief read ssh keys from settings
      */
     bool GetSshKeys(wxString& publicKey, wxString& privateKey, wxString& remoteUser, wxString& passphrase);
-    
+
     /**
      * @brief return the last clone URL
      */
     bool GetLastCloneInfo(wxString& cloneURL, wxString& path);
     void AddLastCloneInfo(const wxString& cloneURL, const wxString& path);
-    
+
     /**
      * @brief return JSON configuraton
      */

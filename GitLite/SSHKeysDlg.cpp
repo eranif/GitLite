@@ -5,7 +5,4 @@ SSHKeysDlg::SSHKeysDlg(wxWindow* parent)
 {
 }
 
-SSHKeysDlg::~SSHKeysDlg()
-{
-}
-
+SSHKeysDlg::~SSHKeysDlg() {}
