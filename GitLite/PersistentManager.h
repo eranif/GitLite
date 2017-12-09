@@ -12,7 +12,7 @@ public:
     PersistentManager();
     ~PersistentManager();
 
-    wxConfigBase* GetConfig() const { return m_config; }
+    wxFileConfig* GetConfig() const { return m_config; }
 };
 
 #endif // PERSISTENTMANAGER_H
