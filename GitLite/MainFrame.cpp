@@ -1,6 +1,6 @@
 #include "MainFrame.h"
 #include <wx/aboutdlg.h>
-#include <wx/textdlg.h>
+#include <wx/textdlg.h> 
 #include <wx/msgdlg.h>
 #include "UserNamePasswordDlg.h"
 #include "SSHKeysDlg.h"

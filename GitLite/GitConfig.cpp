@@ -2,7 +2,6 @@
 #include <wx/stdpaths.h>
 
 GitConfig::GitConfig() {}
-
 GitConfig::~GitConfig() {}
 
 void GitConfig::Load()

@@ -1,4 +1,4 @@
-#ifndef GITCONFIG_H
+#ifndef GITCONFIG_H 
 #define GITCONFIG_H
 
 #include "wxSimpleJSON.h"

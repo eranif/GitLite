@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
-
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 include(FindLibSSH2)
